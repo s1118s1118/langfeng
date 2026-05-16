@@ -480,7 +480,7 @@
                 <h3 class="skill-title">⚔️ 透骨刺</h3>
                 <div class="skill-desc">
                     <p>隨機點名衝鋒，造成分攤傷害並附帶再中 <span class="badge badge-danger">☠️ 即死標記</span>。</p>
-                    <div class="tip">💡 ：<span class="badge badge-warning">🤝 承傷</span>（需1+4人抱團）。</div>
+                    <div class="tip">💡 ：必須 <span class="badge badge-warning">🤝 承傷</span>（需1+4人抱團）。</div>
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
@@ -1253,7 +1253,7 @@
                         💡 自覺：相連的一方可用在P2獲得的QTE「易命」自殺，並使另一方獲得buff死戰不息增傷120%、增療300%。
                     </div>
                     <div class="tip" style="background-color: transparent; border-color: #dc3545; color: var(--accent-color); margin-top: 15px; font-size: 15px; font-weight: bold;">
-                     💡：坦奶相連坦直接死，DPS留爆發職業。
+                     💡：優先從坦奶挑4個點，且坦奶會盡可能相連。坦直接死，DPS留爆發高職業。
                     </div>
                 </div>
                 <div class="skill-media-container">
@@ -1318,7 +1318,6 @@
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                // 一旦出現過就不再觀察，避免反覆消耗效能
                 revealObserver.unobserve(entry.target);
             }
         });
@@ -1342,21 +1341,17 @@
         const currentBlock = headerElement.parentElement;
         const isCurrentlyCollapsed = currentBlock.classList.contains('collapsed');
 
-        // 先把所有的王都收起來
         const allBlocks = document.querySelectorAll('.boss-section');
         allBlocks.forEach(block => {
             block.classList.add('collapsed');
         });
 
-        // 如果原本是收起的，就把它展開並平滑對齊畫面
         if (isCurrentlyCollapsed) {
             currentBlock.classList.remove('collapsed');
             
-            // 延遲一點點讓網頁長度展開後，再進行平滑滾動對齊
             setTimeout(() => {
                 const topOffset = currentBlock.getBoundingClientRect().top + window.scrollY - 20; 
                 window.scrollTo({ top: topOffset, behavior: 'smooth' });
-                // 觸發重新檢查浮現動畫
                 document.querySelectorAll('.reveal').forEach(el => {
                     if(el.getBoundingClientRect().top < window.innerHeight) {
                         el.classList.add('active');
@@ -1382,7 +1377,6 @@
                     setTimeout(() => {
                         const topOffset = targetBlock.getBoundingClientRect().top + window.scrollY - 20; 
                         window.scrollTo({ top: topOffset, behavior: 'smooth' });
-                        // 確保切換後卡片能浮現
                         document.querySelectorAll('.reveal').forEach(el => {
                             if(el.getBoundingClientRect().top < window.innerHeight) {
                                 el.classList.add('active');
@@ -1394,7 +1388,6 @@
         });
     });
 
-    // 滾動進度追蹤 (更新側邊欄亮起狀態)
     const observerOptions = {
         root: null,
         rootMargin: '-20% 0px -60% 0px', 
@@ -1427,7 +1420,6 @@
             gifToggleBtn.innerHTML = '🛑 暫停所有動畫';
             gifToggleBtn.style.color = '#f1c40f';
             allVideos.forEach(v => {
-                // 如果外層王沒被收起，才播放
                 const parentSection = v.closest('.section-block');
                 if(parentSection && !parentSection.classList.contains('collapsed')) {
                     v.play().catch(e => console.log('Autoplay prevented', e));
@@ -1444,7 +1436,6 @@
     const prevImgBtn = document.getElementById('prevImgBtn');
     const nextImgBtn = document.getElementById('nextImgBtn');
     
-    // 只抓取非隱藏區域的影片作為畫廊清單
     function getActiveMediaArray() {
         const activeSection = document.querySelector('.section-block:not(.collapsed)');
         if(!activeSection) return [];
@@ -1477,7 +1468,6 @@
             modalImg.style.display = 'block';
         } else if (target.tagName.toLowerCase() === 'video') {
             modalImg.style.display = 'none';
-            // 強制賦予 src (因為原本有可能是 preload=none 狀態)
             modalVideo.src = target.currentSrc || target.src || target.getAttribute('src');
             modalVideo.style.display = 'block';
             modalVideo.play(); 
@@ -1487,7 +1477,7 @@
     closeModalBtn.addEventListener('click', () => {
         mediaModal.style.display = "none";
         modalVideo.pause();
-        modalVideo.src = ""; // 關閉時清空資源釋放記憶體
+        modalVideo.src = ""; 
     });
     
     mediaModal.addEventListener('click', function(e) {
@@ -1524,13 +1514,13 @@
         }
     });
 
-    // === 音樂播放器邏輯 ===
+    // === 🎵 音樂播放器邏輯與智慧裝置判斷 🎵 ===
     const playlist = [
-        { src: "music1.mp3", title: "🎵 1. 三葉のテーマ" },
-        { src: "music2.mp3", title: "🎵 2. 動天" },
-        { src: "music3.mp3", title: "🎵 3. Naruto Main Theme" },
-        { src: "music4.mp3", title: "🎵 4. ツナ覚醒" },
-        { src: "music5.mp3", title: "🎵 5. FAIRY TAIL メインテーマ" }
+        { src: "music1.mp3", title: "🎵 三葉のテーマ" },
+        { src: "music2.mp3", title: "🎵 動天" },
+        { src: "music3.mp3", title: "🎵 Naruto Main Theme" },
+        { src: "music4.mp3", title: "🎵 ツナ覚醒" },
+        { src: "music5.mp3", title: "🎵 FAIRY TAIL メインテーマ" }
     ];
     let currentSongIndex = 0;
     let hasInteracted = false; 
@@ -1566,6 +1556,7 @@
     }
 
     playPauseBtn.addEventListener('click', function() {
+        hasInteracted = true; // 標記已互動
         if (bgmPlayer.paused) playSong();
         else { bgmPlayer.pause(); playPauseBtn.textContent = "▶️"; }
     });
@@ -1617,12 +1608,23 @@
         }
     });
 
-    document.addEventListener('click', function initAudio() {
-        if (!hasInteracted) {
-            playSong(); hasInteracted = true;
-            document.removeEventListener('click', initAudio);
-        }
-    });
+    // 👇 智慧判斷裝置：手機禁用全域點擊播放，電腦保留點擊任意處播放 👇
+    const isMobileDevice = window.innerWidth <= 900 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    if (!isMobileDevice) {
+        document.addEventListener('click', function initAudio(e) {
+            // 如果點擊的是播放按鈕本身，交給按鈕自己的邏輯處理
+            if (e.target.closest('#playPauseBtn')) {
+                document.removeEventListener('click', initAudio);
+                return;
+            }
+            if (!hasInteracted) {
+                playSong(); 
+                hasInteracted = true;
+                document.removeEventListener('click', initAudio);
+            }
+        });
+    }
 
     bgmPlayer.volume = 0.5; 
     loadSong(currentSongIndex);
