@@ -170,43 +170,23 @@
         #backToTopBtn { display: none; position: fixed; bottom: 40px; right: 40px; z-index: 999; background-color: var(--accent-color); color: white; border: none; outline: none; cursor: pointer; padding: 15px; border-radius: 50%; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s, background-color 0.2s; }
         #backToTopBtn:hover { background-color: #c0392b; transform: scale(1.1); }
 
-        /* === 🌟 右上角無邊框 Q 版對話框 (動態顯示版) === */
-        .floating-mascot { 
-            position: fixed; top: 25px; right: 40px; z-index: 998; 
-            display: flex; align-items: center; gap: 15px; cursor: pointer; 
-            transition: transform 0.3s; pointer-events: auto; 
-        }
+        /* === 右上角無邊框 Q 版對話框 === */
+        .floating-mascot { position: fixed; top: 25px; right: 40px; z-index: 998; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform 0.3s; pointer-events: auto; }
         .floating-mascot:hover { transform: scale(1.1) rotate(-5deg); }
-        .floating-mascot img { 
-            width: 80px; height: 80px; object-fit: contain; 
-            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); 
-            border-radius: 50%; border: 3px solid white; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); background-color: white; 
-            position: relative; z-index: 2;
-        }
+        .floating-mascot img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); background-color: white; position: relative; z-index: 2;}
         
         .mascot-speech { 
-            position: relative; background-color: white; color: #333; 
-            padding: 10px 18px; border-radius: 20px; font-size: 14px; 
-            font-weight: bold; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
-            
-            opacity: 0;
-            transform: translateX(10px);
-            pointer-events: none; 
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            position: relative; background-color: white; color: #333; padding: 10px 18px; border-radius: 20px; font-size: 14px; font-weight: bold; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+            opacity: 0; transform: translateX(10px); pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease;
         }
         
         .floating-mascot:hover .mascot-speech,
-        .mascot-speech.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .mascot-speech::after { content: ''; position: absolute; top: 50%; right: -10px; transform: translateY(-50%); width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid white; }
+        .mascot-speech.show { opacity: 1; transform: translateX(0); }
         
+        .mascot-speech::after { content: ''; position: absolute; top: 50%; right: -10px; transform: translateY(-50%); width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid white; }
         body.dark-mode .mascot-speech { background-color: #1a1a1a; color: #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         body.dark-mode .mascot-speech::after { border-left-color: #1a1a1a; }
-        body.dark-mode .floating-mascot img { border-color: var(--accent-color); background-color: var(--accent-color); }
+        body.dark-mode .floating-mas mascot img { border-color: var(--accent-color); background-color: var(--accent-color); }
 
         /* === 攻略主體 === */
         .container { max-width: 1450px; margin: 0 auto; }
@@ -258,7 +238,7 @@
         .img-group:has(video.gallery-item)::after {
             content: '';
             position: absolute;
-            top: calc(50% - 14px); /* 微調置中，避開下方文字 */
+            top: calc(50% - 14px); 
             left: 50%;
             transform: translate(-50%, -50%);
             width: 60px;
@@ -272,17 +252,15 @@
             transition: all 0.3s ease;
             opacity: 0.85;
 
-            /* 使用內建 SVG 繪製純淨的白色三角形，絕對不會出現奇怪拼圖 */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
             background-size: 34px 34px;
-            background-position: calc(50% + 3px) center; /* 三角形視覺重心稍微往右移 */
+            background-position: calc(50% + 3px) center; 
             background-repeat: no-repeat;
         }
 
-        /* 當滑鼠移到影片區塊時，播放按鈕變大變紅 */
         .img-group:has(video.gallery-item):hover::after {
-            background-color: rgba(231, 76, 60, 0.9); /* 主題紅 */
-            transform: translate(-50%, -50%) scale(1.15); /* 放大特效 */
+            background-color: rgba(231, 76, 60, 0.9); 
+            transform: translate(-50%, -50%) scale(1.15); 
             opacity: 1;
             box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
             border-color: #fff;
@@ -319,13 +297,9 @@
             .reference-card { margin: 15px 0; padding: 15px; }
             .modal-media { width: 95vw; aspect-ratio: 16 / 9; max-width: none; }
             
-            /* 手機版適當縮小播放按鈕 */
             .img-group:has(video.gallery-item)::after {
-                width: 46px;
-                height: 46px;
-                border-width: 2px;
-                background-size: 26px 26px;
-                background-position: calc(50% + 2px) center;
+                width: 46px; height: 46px; border-width: 2px;
+                background-size: 26px 26px; background-position: calc(50% + 2px) center;
                 top: calc(50% - 10px);
             }
         }
@@ -376,15 +350,15 @@
 
 <button id="backToTopBtn" title="回到最上層">↑ Top</button>
 
-<div class="floating-mascot" id="mascotBtn" title="遊戲私訊「青瓦白牆」～拓荒加油！！">
-    <span class="mascot-speech show" id="mascotSpeech">優化&BUG滑過來！</span>
+<div class="floating-mascot" id="mascotBtn">
+    <span class="mascot-speech show" id="mascotSpeech">問題反饋請點我！</span>
     <img src="f.png" alt="專屬圖案" loading="lazy">
 </div>
 
 <div class="container">
     <div class="header-title" id="top">
         《劍網三》閬風懸城全機制實戰攻略<br>
-        <span style="font-size: 18px; color: var(--text-light); font-weight: normal;"> 考前衝刺講義(V5.0)</span>
+        <span style="font-size: 18px; color: var(--text-light); font-weight: normal;"> 考前衝刺講義(V5.1)</span>
     </div>
 
     <div class="section-block boss-section" id="boss1">
@@ -1541,7 +1515,6 @@
             modalImg.style.display = 'block';
         } else if (target.tagName.toLowerCase() === 'video') {
             modalImg.style.display = 'none';
-            // 去除 #t=0.1，讓放大版的影片從 0 秒開始正常播放
             let originalSrc = target.currentSrc || target.src || target.getAttribute('src');
             modalVideo.src = originalSrc.split('#')[0];
             modalVideo.style.display = 'block';
@@ -1591,11 +1564,11 @@
 
     // === 🎵 音樂播放器邏輯與智慧裝置判斷 🎵 ===
     const playlist = [
-        { src: "music1.mp3", title: "🎵 1. 三葉のテーマ" },
-        { src: "music2.mp3", title: "🎵 2. 動天" },
-        { src: "music3.mp3", title: "🎵 3. Naruto Main Theme" },
-        { src: "music4.mp3", title: "🎵 4. ツナ覚醒" },
-        { src: "music5.mp3", title: "🎵 5. FAIRY TAIL メインテーマ" }
+        { src: "music1.mp3", title: "🎵  三葉のテーマ" },
+        { src: "music2.mp3", title: "🎵  かたわれ時" },
+        { src: "music3.mp3", title: "🎵  Naruto Main Theme" },
+        { src: "music4.mp3", title: "🎵  ツナ覚醒" },
+        { src: "music5.mp3", title: "🎵  FAIRY TAIL メインテーマ" }
     ];
     let currentSongIndex = 0;
     let hasInteracted = false; 
@@ -1699,25 +1672,42 @@
         });
     }
 
-    // === 💡 吉祥物對話框：進網頁預設顯示，4秒後自動消失 ===
+    // === 💡 吉祥物動態切換對話框彩蛋 ===
     const mascotBtn = document.getElementById('mascotBtn');
     const mascotSpeech = document.getElementById('mascotSpeech');
     let speechTimeout;
 
-    // 預設 4 秒後自動隱藏
+    const defaultText = "問題反饋請點我！";
+    const clickText = "遊戲私訊「青瓦白牆」！拓荒加油！！";
+
+    // 預設 4 秒後自動隱藏開場文字
     speechTimeout = setTimeout(() => {
         mascotSpeech.classList.remove('show');
     }, 4000);
 
-    // 手機版點擊再次顯示 3 秒
-    if (isMobileDevice) {
-        mascotBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); 
-            clearTimeout(speechTimeout);
-            mascotSpeech.classList.add('show');
-            speechTimeout = setTimeout(() => {
-                mascotSpeech.classList.remove('show');
-            }, 3000);
+    // 點擊事件：切換文字並顯示 3 秒 (全平台適用)
+    mascotBtn.addEventListener('click', function(e) {
+        e.stopPropagation(); 
+        clearTimeout(speechTimeout);
+        
+        mascotSpeech.textContent = clickText;
+        mascotSpeech.classList.add('show');
+        
+        // 3 秒後自動隱藏，並在動畫結束後換回預設文字
+        speechTimeout = setTimeout(() => {
+            mascotSpeech.classList.remove('show');
+            setTimeout(() => {
+                mascotSpeech.textContent = defaultText;
+            }, 300); 
+        }, 3000);
+    });
+
+    // 電腦版 Hover 事件：確保滑鼠移過去時，看到的是預設文字
+    if (!isMobileDevice) {
+        mascotBtn.addEventListener('mouseenter', function() {
+            if (!mascotSpeech.classList.contains('show')) {
+                mascotSpeech.textContent = defaultText;
+            }
         });
     }
 
