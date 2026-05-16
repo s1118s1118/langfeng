@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>《劍網三》閬風懸城全機制實戰攻略 (V2.0)</title>
+    <title>《劍網三》閬風懸城全機制實戰攻略 (V3.0)</title>
     <style>
         /* === 定義色彩變數（深淺色完美分離版） === */
         :root {
@@ -120,7 +120,7 @@
         #gifToggleBtn {
             background: none;
             border: 1px solid #4a6278;
-            color: #f1c40f;
+            color: #e74c3c; /* 預設改為紅色 */
             width: 100%;
             text-align: left;
             cursor: pointer;
@@ -133,7 +133,7 @@
         }
         #gifToggleBtn:hover {
             background-color: #34495e;
-            color: white;
+            color: white !important;
         }
 
         /* === 音樂播放器樣式 === */
@@ -377,7 +377,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
         }
 
-        /* === 🌟 透明模糊背景的燈箱畫廊 === */
+        /* === 🌟 畫廊完美統一尺寸版 (無論原片多小都強制撐滿，控制條永遠貼底) === */
         #mediaModal {
             display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6); 
@@ -446,7 +446,7 @@
         <br>
         <a href="#references" class="nav-link" data-target="references" style="color: #f1c40f;">📚 資料來源與致謝</a>
         <br>
-        <button id="gifToggleBtn" title="一鍵暫停或播放網頁上的所有影片動畫">🛑 暫停所有動畫</button>
+        <button id="gifToggleBtn" title="一鍵暫停或播放網頁上的所有影片動畫">▶️ 播放所有預覽</button>
     </div>
 
     <div class="music-player-container">
@@ -507,7 +507,7 @@
                         <figcaption class="img-caption">場地立柱分佈示意圖</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="2.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="2.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">英雄陣盤承傷</figcaption>
                     </figure>
                 </div>
@@ -536,23 +536,23 @@
                 </div>
                 <div class="media-column">
                     <figure class="img-group">
-                        <video src="3.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="3.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">靈簪鎖魂</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="4.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="4.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">祭跪雙墳</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="5.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="5.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">悲音慟潮</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="6.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="6.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">墳音咒</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="7.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="7.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">慟哭震地</figcaption>
                     </figure>
                 </div>
@@ -580,7 +580,7 @@
                 </div>
                 <div class="media-column">
                      <figure class="img-group">
-                        <video src="8.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="8.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">中心風區與QTE</figcaption>
                     </figure>
                 </div>
@@ -613,27 +613,27 @@
                         <figcaption class="img-caption">三疊殺</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="10.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="10.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">魂鎖牽</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="11.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="11.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沒拉斷</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="12.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="12.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">透骨刺</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="13.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="13.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">碎星</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="14.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="14.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">能量灌注特效</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="15.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="15.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">毒變</figcaption>
                     </figure>
                 </div>
@@ -649,22 +649,22 @@
                         <li><strong>千機·星火：</strong>點名6名玩家腳下排小圈（上下4尺內受傷）。
                             <div class="tip">💡 ：用QTE躲圈，分配部分人提早扶搖跳進中心風區，或離開中心風圈在聶雲回去，製造高度差可以少躲些圈。</div>
                         </li>
-                        <li><strong>千機·燎原：</strong>在風力中心放15尺致死大圈，無視高度。
+                        <li><strong>千機·燎原：</strong>在風力中心放15尺致大圈，無視高度。
                             <div class="tip">💡 ：用QTE離開大圈，在落地前聶雲、小輕功回中間。</div>
                         </li>
                     </ul>
                 </div>
                 <div class="media-column">
                      <figure class="img-group">
-                        <video src="16.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="16.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">星火</figcaption>
                     </figure>
                      <figure class="img-group">
-                        <video src="17.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="17.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">燎原</figcaption>
                     </figure>
                      <figure class="img-group">
-                        <video src="18.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="18.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">拉線</figcaption>
                     </figure>
                 </div>
@@ -704,7 +704,7 @@
 
             <div class="content-grid">
                 <div class="text-column">
-                    <h3>📌 BOSS技能（貫全程）</h3>
+                    <h3>📌 BOSS技能（貫穿全程）</h3>
                     <ul>
                         <li><strong>旋扇/裂風：</strong>點名1人注視5秒後放扇子追擊，撞到人或柱會引爆全團AOE並分裂射出扇骨，追擊5秒後扇子威力衰減。<br>
                             【普/英】第一次扇子引爆後會額外生出一把旋扇追最近的人。
@@ -723,27 +723,27 @@
                 </div>
                 <div class="media-column">
                     <figure class="img-group">
-                        <video src="20.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="20.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">旋扇追擊</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="21.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="21.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">裂風及第二把扇子</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="22.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="22.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">聚鋒</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="23.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="23.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">聚鋒(被擋線)</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="24.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="24.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">掠影探囊</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="123.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="123.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">三疊扇</figcaption>
                     </figure>
                 </div>
@@ -773,7 +773,7 @@
                 </div>
                 <div class="media-column">
                     <figure class="img-group">
-                        <video src="25.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="25.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">神秘裝置</figcaption>
                     </figure>
                     <figure class="img-group">
@@ -785,11 +785,11 @@
                         <figcaption class="img-caption">傳功</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="28.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="28.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沾衣哨被點名</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="282.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="282.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沾衣哨救隊友</figcaption>
                     </figure>
                 </div>
@@ -865,39 +865,39 @@
                 </div>
                 <div class="media-column">
                     <figure class="img-group">
-                        <video src="30.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="30.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">魂火喚醒</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="31.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="31.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">死侍</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="32.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="32.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紫圈&鬼火球</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="33.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="33.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">破</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="34.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="34.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">歸塵</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="35.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="35.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">處決 / 忘川</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="36.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="36.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="37.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="37.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紅紅黃紅黃</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="38.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="38.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">鬼頭狼</figcaption>
                     </figure>
                 </div>
@@ -932,23 +932,23 @@
                         <figcaption class="img-caption">巨刃掠影</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="40.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="40.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">黃泉斬</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="41.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="41.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">黃泉破</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="42.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="42.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">風暴連擊</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="43.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="43.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">汲取</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="44.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="44.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬破</figcaption>
                     </figure>
                 </div>
@@ -1012,27 +1012,27 @@
                         <figcaption class="img-caption">轉移</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="48.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="48.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">索命箭</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="49.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="49.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">蘊雷機瓮</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="50.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="50.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">充能餘波</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="51.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="51.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">毒剎</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="52.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="52.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">連弩</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="5051.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="5051.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption"><span class="hero-tag">英雄毒剎+充能餘波演示</span></figcaption>
                     </figure>
                 </div>
@@ -1072,19 +1072,19 @@
                 </div>
                 <div class="media-column">
                     <figure class="img-group">
-                        <video src="53.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="53.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬擊</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="54.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="54.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">玄陰霹靂彈</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="55.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="55.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">落星·炙炎</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="56.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="56.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">連弩掃射</figcaption>
                     </figure>
                     <figure class="img-group">
@@ -1092,23 +1092,23 @@
                         <figcaption class="img-caption">飛鏢提示</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="58.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="58.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">飛鏢(扶搖)</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="59.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="59.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">飛鏢(轉移)</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="60.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="60.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">落星·磁震</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="61.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="61.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">瞬殺箭</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="62.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="62.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印</figcaption>
                     </figure>
                 </div>
@@ -1147,27 +1147,27 @@
                 </div>
                 <div class="media-column">
                     <figure class="img-group">
-                        <video src="63.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="63.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">牽機磁蕩</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="64.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="64.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">炸彈平台</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="65.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="65.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">蓄能橫掃</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="66.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="66.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紅藍雷晷</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="67.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="67.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">星火連珠</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="68.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="68.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印·厄</figcaption>
                     </figure>
                 </div>
@@ -1190,7 +1190,7 @@
                 </div>
                 <div class="media-column">
                      <figure class="img-group">
-                        <video src="69.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <video src="69.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印·終-自覺</figcaption>
                     </figure>
                 </div>
@@ -1277,16 +1277,16 @@
 
     sections.forEach(sec => observer.observe(sec));
 
-    // === 4. 🛑 一鍵暫停/播放所有影片動畫 ===
+    // === 4. 🛑 一鍵暫停/播放所有影片動畫 (預設為暫停) ===
     const gifToggleBtn = document.getElementById('gifToggleBtn');
-    let isGifPaused = false;
+    let isGifPaused = true; // 預設狀態為暫停，節省效能
 
     gifToggleBtn.addEventListener('click', function() {
         isGifPaused = !isGifPaused;
         const allVideos = document.querySelectorAll('video.gallery-item'); 
         
         if (isGifPaused) {
-            gifToggleBtn.innerHTML = '▶️ 播放所有動畫';
+            gifToggleBtn.innerHTML = '▶️ 播放所有預覽';
             gifToggleBtn.style.color = '#e74c3c';
             allVideos.forEach(v => v.pause());
         } else {
