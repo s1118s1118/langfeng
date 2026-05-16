@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>《劍網三》閬風懸城全機制實戰攻略 (V5.0)</title>
+    <title>《劍網三》閬風懸城全機制實戰攻略 (V5.1)</title>
     <style>
         /* === 定義色彩變數 === */
         :root {
@@ -170,12 +170,40 @@
         #backToTopBtn { display: none; position: fixed; bottom: 40px; right: 40px; z-index: 999; background-color: var(--accent-color); color: white; border: none; outline: none; cursor: pointer; padding: 15px; border-radius: 50%; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s, background-color 0.2s; }
         #backToTopBtn:hover { background-color: #c0392b; transform: scale(1.1); }
 
-        /* === 右上角無邊框 Q 版對話框 === */
-        .floating-mascot { position: fixed; top: 25px; right: 40px; z-index: 998; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform 0.3s; pointer-events: auto; }
+        /* === 🌟 右上角無邊框 Q 版對話框 (動態顯示版) === */
+        .floating-mascot { 
+            position: fixed; top: 25px; right: 40px; z-index: 998; 
+            display: flex; align-items: center; gap: 15px; cursor: pointer; 
+            transition: transform 0.3s; pointer-events: auto; 
+        }
         .floating-mascot:hover { transform: scale(1.1) rotate(-5deg); }
-        .floating-mascot img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); background-color: white; }
-        .mascot-speech { position: relative; background-color: white; color: #333; padding: 10px 18px; border-radius: 20px; font-size: 14px; font-weight: bold; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .floating-mascot img { 
+            width: 80px; height: 80px; object-fit: contain; 
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); 
+            border-radius: 50%; border: 3px solid white; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); background-color: white; 
+            position: relative; z-index: 2;
+        }
+        
+        .mascot-speech { 
+            position: relative; background-color: white; color: #333; 
+            padding: 10px 18px; border-radius: 20px; font-size: 14px; 
+            font-weight: bold; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+            
+            opacity: 0;
+            transform: translateX(10px);
+            pointer-events: none; 
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .floating-mascot:hover .mascot-speech,
+        .mascot-speech.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         .mascot-speech::after { content: ''; position: absolute; top: 50%; right: -10px; transform: translateY(-50%); width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid white; }
+        
         body.dark-mode .mascot-speech { background-color: #1a1a1a; color: #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         body.dark-mode .mascot-speech::after { border-left-color: #1a1a1a; }
         body.dark-mode .floating-mascot img { border-color: var(--accent-color); background-color: var(--accent-color); }
@@ -226,6 +254,40 @@
         .gallery-item { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background-color: #151e27; border-radius: 6px; display: block; cursor: zoom-in; border: 1px solid var(--border-color); transition: box-shadow 0.2s, transform 0.2s; }
         .gallery-item:hover { transform: scale(1.02); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
+        /* === 🌟 影片預覽圖上的播放按鈕 (乾淨純 SVG 終極版) === */
+        .img-group:has(video.gallery-item)::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 14px); /* 微調置中，避開下方文字 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 1;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            opacity: 0.85;
+
+            /* 使用內建 SVG 繪製純淨的白色三角形，絕對不會出現奇怪拼圖 */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+            background-size: 34px 34px;
+            background-position: calc(50% + 3px) center; /* 三角形視覺重心稍微往右移 */
+            background-repeat: no-repeat;
+        }
+
+        /* 當滑鼠移到影片區塊時，播放按鈕變大變紅 */
+        .img-group:has(video.gallery-item):hover::after {
+            background-color: rgba(231, 76, 60, 0.9); /* 主題紅 */
+            transform: translate(-50%, -50%) scale(1.15); /* 放大特效 */
+            opacity: 1;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+            border-color: #fff;
+        }
+
         /* === 🌟 透明模糊背景的燈箱畫廊 === */
         #mediaModal { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); }
         .modal-media { margin: auto; display: none; width: 75vw; max-width: 1200px; aspect-ratio: 16 / 9; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 5px 25px rgba(0,0,0,0.8); border-radius: 8px; user-select: none; outline: none; background-color: #151e27; }
@@ -256,6 +318,16 @@
             .skill-media-container .img-group { max-width: 100%; width: 100%; }
             .reference-card { margin: 15px 0; padding: 15px; }
             .modal-media { width: 95vw; aspect-ratio: 16 / 9; max-width: none; }
+            
+            /* 手機版適當縮小播放按鈕 */
+            .img-group:has(video.gallery-item)::after {
+                width: 46px;
+                height: 46px;
+                border-width: 2px;
+                background-size: 26px 26px;
+                background-position: calc(50% + 2px) center;
+                top: calc(50% - 10px);
+            }
         }
     </style>
 </head>
@@ -304,8 +376,8 @@
 
 <button id="backToTopBtn" title="回到最上層">↑ Top</button>
 
-<div class="floating-mascot" title="遊戲私訊「青瓦白牆」～拓荒加油！！">
-    <span class="mascot-speech">優化&BUG滑過來！</span>
+<div class="floating-mascot" id="mascotBtn" title="遊戲私訊「青瓦白牆」～拓荒加油！！">
+    <span class="mascot-speech show" id="mascotSpeech">優化&BUG滑過來！</span>
     <img src="f.png" alt="專屬圖案" loading="lazy">
 </div>
 
@@ -339,7 +411,7 @@
                         <figcaption class="img-caption">場地立柱分佈示意圖</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="2.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="2.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">英雄陣盤承傷</figcaption>
                     </figure>
                 </div>
@@ -353,7 +425,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="3.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="3.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">靈簪鎖魂</figcaption>
                     </figure>
                 </div>
@@ -367,7 +439,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="4.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="4.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">祭跪雙墳</figcaption>
                     </figure>
                 </div>
@@ -381,7 +453,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="5.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="5.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">悲音慟潮</figcaption>
                     </figure>
                 </div>
@@ -395,7 +467,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="6.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="6.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">墳音咒</figcaption>
                     </figure>
                 </div>
@@ -409,7 +481,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="7.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="7.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">慟哭震地</figcaption>
                     </figure>
                 </div>
@@ -438,7 +510,7 @@
                 </div>
                 <div class="skill-media-container">
                      <figure class="img-group">
-                        <video src="8.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="8.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">中心風區與QTE</figcaption>
                     </figure>
                 </div>
@@ -466,11 +538,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="10.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="10.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">魂鎖牽</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="11.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="11.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沒拉斷</figcaption>
                     </figure>
                 </div>
@@ -484,7 +556,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="12.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="12.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">透骨刺</figcaption>
                     </figure>
                 </div>
@@ -498,11 +570,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="13.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="13.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">碎星</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="14.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="14.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">能量灌注特效</figcaption>
                     </figure>
                 </div>
@@ -516,7 +588,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="15.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="15.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">毒變</figcaption>
                     </figure>
                 </div>
@@ -539,15 +611,15 @@
                 </div>
                 <div class="skill-media-container">
                      <figure class="img-group">
-                        <video src="16.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="16.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">星火</figcaption>
                     </figure>
                      <figure class="img-group">
-                        <video src="17.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="17.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">燎原</figcaption>
                     </figure>
                      <figure class="img-group">
-                        <video src="18.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="18.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">拉線</figcaption>
                     </figure>
                 </div>
@@ -595,11 +667,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="20.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="20.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">旋扇追擊</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="21.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="21.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">裂風及第二把扇子</figcaption>
                     </figure>
                 </div>
@@ -613,11 +685,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="22.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="22.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">聚鋒</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="23.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="23.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">聚鋒(被擋線)</figcaption>
                     </figure>
                 </div>
@@ -631,7 +703,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="24.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="24.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">掠影探囊</figcaption>
                     </figure>
                 </div>
@@ -645,7 +717,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="123.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="123.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">三疊扇</figcaption>
                     </figure>
                 </div>
@@ -667,7 +739,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="25.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="25.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">神秘裝置</figcaption>
                     </figure>
                     <figure class="img-group">
@@ -689,11 +761,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="28.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="28.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沾衣哨被點名</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="282.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="282.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沾衣哨救隊友</figcaption>
                     </figure>
                 </div>
@@ -745,7 +817,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="30.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="30.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">魂火喚醒</figcaption>
                     </figure>
                 </div>
@@ -765,11 +837,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="31.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="31.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">死侍</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="32.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="32.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紫圈&鬼火球</figcaption>
                     </figure>
                 </div>
@@ -778,12 +850,13 @@
             <div class="skill-card reveal">
                 <h3 class="skill-title">⚔️ 破</h3>
                 <div class="skill-desc">
-                    <p>王無敵蓄力，魂火會先對「兩列（共六個格子）」示警後隱匿，隨後爆發傷害。</p>
+                    <p>王讀條且無敵，魂火會先對「兩列（共六個格子）」示警後隱匿，隨後爆發傷害。無敵會持續到技能結束。</p>
                     <div class="tip">💡 ：找沒有被魂火覆蓋的「安全區格子」躲避。</div>
+                    <div class="tip">💡 ：<span class="hero-tag">英雄下P後的破BOSS是沒有無敵的，可以打傷害。</span></div>
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="33.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="33.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">破</figcaption>
                     </figure>
                 </div>
@@ -798,7 +871,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="34.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="34.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">歸塵</figcaption>
                     </figure>
                 </div>
@@ -812,7 +885,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="35.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="35.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">處決 / 忘川</figcaption>
                     </figure>
                 </div>
@@ -821,16 +894,16 @@
             <div class="skill-card reveal">
                 <h3 class="skill-title">⚔️ 斬</h3>
                 <div class="skill-desc">
-                    <p>王讀條5次，特效爲腳下(黃光）或頭頂(紅光），隨後按特效順序對地/空中玩家放AOE。</p>
+                    <p>BOSS長讀條6秒，蓄立時每秒隨機施放黃光(腳下)或紅光(頭頂)，讀條結束無敵；直到後續技能結束。隨後按特效順序對地/空中玩家放5次AOE。</p>
                     <div class="tip">💡 ：記好顏色順序，黃跳紅不跳。<br>*如連續2次黃光可二段跳。<br>*如最後3-4次都是黃光可直接扶搖跳。</div>
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="36.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="36.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="37.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="37.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紅紅黃紅黃</figcaption>
                     </figure>
                 </div>
@@ -845,7 +918,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="38.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="38.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">鬼頭狼</figcaption>
                     </figure>
                 </div>
@@ -874,11 +947,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="40.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="40.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">黃泉斬</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="41.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="41.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">黃泉破</figcaption>
                     </figure>
                 </div>
@@ -892,7 +965,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="42.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="42.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">風暴連擊</figcaption>
                     </figure>
                 </div>
@@ -907,7 +980,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="43.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="43.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">汲取</figcaption>
                     </figure>
                 </div>
@@ -921,7 +994,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="44.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="44.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬破</figcaption>
                     </figure>
                 </div>
@@ -979,7 +1052,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="48.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="48.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">索命箭</figcaption>
                     </figure>
                 </div>
@@ -999,7 +1072,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="49.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="49.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">蘊雷機瓮</figcaption>
                     </figure>
                 </div>
@@ -1023,19 +1096,19 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="50.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="50.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">充能餘波</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="51.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="51.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">毒剎</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="52.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="52.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">連弩</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="5051.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="5051.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption"><span class="hero-tag">英雄毒剎+充能餘波演示</span></figcaption>
                     </figure>
                 </div>
@@ -1050,7 +1123,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="53.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="53.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬擊</figcaption>
                     </figure>
                 </div>
@@ -1064,7 +1137,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="54.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="54.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">玄陰霹靂彈</figcaption>
                     </figure>
                 </div>
@@ -1078,7 +1151,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="55.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="55.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">落星·炙炎</figcaption>
                     </figure>
                 </div>
@@ -1092,7 +1165,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="56.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="56.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">連弩掃射</figcaption>
                     </figure>
                 </div>
@@ -1111,11 +1184,11 @@
                         <figcaption class="img-caption">飛鏢提示</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="58.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="58.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">飛鏢(扶搖)</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="59.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="59.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">飛鏢(轉移)</figcaption>
                     </figure>
                 </div>
@@ -1129,7 +1202,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="60.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="60.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">落星·磁震</figcaption>
                     </figure>
                 </div>
@@ -1143,7 +1216,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="61.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="61.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">瞬殺箭</figcaption>
                     </figure>
                 </div>
@@ -1157,7 +1230,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="62.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="62.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印</figcaption>
                     </figure>
                 </div>
@@ -1177,11 +1250,11 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="63.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="63.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">牽機磁蕩</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="64.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="64.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">炸彈平台</figcaption>
                     </figure>
                 </div>
@@ -1194,7 +1267,7 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="65.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="65.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">蓄能橫掃</figcaption>
                     </figure>
                 </div>
@@ -1214,15 +1287,15 @@
                 </div>
                 <div class="skill-media-container">
                     <figure class="img-group">
-                        <video src="66.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="66.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紅藍雷晷</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="67.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="67.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">星火連珠</figcaption>
                     </figure>
                     <figure class="img-group">
-                        <video src="68.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="68.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印·厄</figcaption>
                     </figure>
                 </div>
@@ -1258,7 +1331,7 @@
                 </div>
                 <div class="skill-media-container">
                      <figure class="img-group">
-                        <video src="69.mp4" class="gallery-item" loading="lazy" preload="none" loop muted playsinline></video>
+                        <video src="69.mp4#t=0.1" class="gallery-item" loading="lazy" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印·終-自覺</figcaption>
                     </figure>
                 </div>
@@ -1468,7 +1541,9 @@
             modalImg.style.display = 'block';
         } else if (target.tagName.toLowerCase() === 'video') {
             modalImg.style.display = 'none';
-            modalVideo.src = target.currentSrc || target.src || target.getAttribute('src');
+            // 去除 #t=0.1，讓放大版的影片從 0 秒開始正常播放
+            let originalSrc = target.currentSrc || target.src || target.getAttribute('src');
+            modalVideo.src = originalSrc.split('#')[0];
             modalVideo.style.display = 'block';
             modalVideo.play(); 
         }
@@ -1516,11 +1591,11 @@
 
     // === 🎵 音樂播放器邏輯與智慧裝置判斷 🎵 ===
     const playlist = [
-        { src: "music1.mp3", title: "🎵 三葉のテーマ" },
-        { src: "music2.mp3", title: "🎵 動天" },
-        { src: "music3.mp3", title: "🎵 Naruto Main Theme" },
-        { src: "music4.mp3", title: "🎵 ツナ覚醒" },
-        { src: "music5.mp3", title: "🎵 FAIRY TAIL メインテーマ" }
+        { src: "music1.mp3", title: "🎵 1. 三葉のテーマ" },
+        { src: "music2.mp3", title: "🎵 2. 動天" },
+        { src: "music3.mp3", title: "🎵 3. Naruto Main Theme" },
+        { src: "music4.mp3", title: "🎵 4. ツナ覚醒" },
+        { src: "music5.mp3", title: "🎵 5. FAIRY TAIL メインテーマ" }
     ];
     let currentSongIndex = 0;
     let hasInteracted = false; 
@@ -1556,7 +1631,7 @@
     }
 
     playPauseBtn.addEventListener('click', function() {
-        hasInteracted = true; // 標記已互動
+        hasInteracted = true; 
         if (bgmPlayer.paused) playSong();
         else { bgmPlayer.pause(); playPauseBtn.textContent = "▶️"; }
     });
@@ -1608,14 +1683,12 @@
         }
     });
 
-    // 👇 智慧判斷裝置：手機禁用全域點擊播放，電腦保留點擊任意處播放 👇
+    // === 💡 裝置判斷與全域音訊防護 ===
     const isMobileDevice = window.innerWidth <= 900 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
 
     if (!isMobileDevice) {
         document.addEventListener('click', function initAudio(e) {
-            // 如果點擊的是播放按鈕本身，交給按鈕自己的邏輯處理
-            if (e.target.closest('#playPauseBtn')) {
-                document.removeEventListener('click', initAudio);
+            if (e.target.closest('#playPauseBtn') || e.target.closest('#mascotBtn')) {
                 return;
             }
             if (!hasInteracted) {
@@ -1623,6 +1696,28 @@
                 hasInteracted = true;
                 document.removeEventListener('click', initAudio);
             }
+        });
+    }
+
+    // === 💡 吉祥物對話框：進網頁預設顯示，4秒後自動消失 ===
+    const mascotBtn = document.getElementById('mascotBtn');
+    const mascotSpeech = document.getElementById('mascotSpeech');
+    let speechTimeout;
+
+    // 預設 4 秒後自動隱藏
+    speechTimeout = setTimeout(() => {
+        mascotSpeech.classList.remove('show');
+    }, 4000);
+
+    // 手機版點擊再次顯示 3 秒
+    if (isMobileDevice) {
+        mascotBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); 
+            clearTimeout(speechTimeout);
+            mascotSpeech.classList.add('show');
+            speechTimeout = setTimeout(() => {
+                mascotSpeech.classList.remove('show');
+            }, 3000);
         });
     }
 
