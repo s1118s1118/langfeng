@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>《劍網三》閬風懸城全機制實戰攻略 (V3.0)</title>
+    <title>《劍網三》閬風懸城全機制實戰攻略 (V4.0)</title>
     <style>
         /* === 定義色彩變數（深淺色完美分離版） === */
         :root {
@@ -120,7 +120,7 @@
         #gifToggleBtn {
             background: none;
             border: 1px solid #4a6278;
-            color: #e74c3c; /* 預設改為紅色 */
+            color: #e74c3c;
             width: 100%;
             text-align: left;
             cursor: pointer;
@@ -258,7 +258,6 @@
             background-color: white; 
         }
         
-        /* 無邊框對話框本體 */
         .mascot-speech {
             position: relative; 
             background-color: white; 
@@ -268,10 +267,9 @@
             font-size: 14px;
             font-weight: bold;
             white-space: nowrap; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* 靠陰影展現立體感 */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
         
-        /* 氣泡無邊框純色小尾巴 */
         .mascot-speech::after {
             content: '';
             position: absolute;
@@ -282,17 +280,16 @@
             height: 0;
             border-top: 8px solid transparent;
             border-bottom: 8px solid transparent;
-            border-left: 10px solid white; /* 顏色跟著對話框底色走，不再是黑色 */
+            border-left: 10px solid white; 
         }
 
-        /* 🌙 深色模式的專屬樣式 🌙 */
         body.dark-mode .mascot-speech {
-            background-color: #1a1a1a; /* 深黑底 */
+            background-color: #1a1a1a; 
             color: #eee; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         body.dark-mode .mascot-speech::after {
-            border-left-color: #1a1a1a; /* 尾巴跟著變深黑底 */
+            border-left-color: #1a1a1a; 
         }
         body.dark-mode .floating-mascot img {
             border-color: var(--accent-color); 
@@ -327,38 +324,79 @@
         .collapsed .toggle-icon { transform: rotate(-90deg); }
         .collapsed .section-content { display: none; } 
 
-        .content-grid {
-            display: flex; flex-wrap: wrap; padding: 25px 30px; gap: 30px;
-            border-bottom: 1px solid var(--border-color); transition: border-color 0.3s;
+        /* ========================================================
+           🌟 V4.0 全新核心：一對一「機制卡片 (Card Layout)」排版 
+           ======================================================== */
+        .skill-card {
+            background: var(--block-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 30px;
+            box-shadow: 0 3px 8px var(--shadow-color);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s;
         }
-        .content-grid:last-child { border-bottom: none; }
-        .text-column { flex: 1; min-width: 300px; }
-        .media-column { flex: 1.25; min-width: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-content: start; }
+        .skill-card:hover {
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            border-color: #bdc3c7;
+        }
+        body.dark-mode .skill-card:hover { border-color: #555; }
+
+        .skill-title {
+            color: var(--accent-color);
+            font-size: 19px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 10px;
+            font-weight: bold;
+        }
+        .skill-desc p { margin: 0 0 10px 0; }
+        .skill-desc ul { margin: 0 0 10px 0; padding-left: 20px; }
+        .skill-desc li { margin-bottom: 8px; }
         
-        h3 { 
-            color: var(--heading-color); 
-            font-size: 18px; margin-top: 0; margin-bottom: 15px; 
-            border-left: 4px solid var(--accent-color); padding-left: 10px; transition: color 0.3s; 
+        .skill-media-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            background-color: var(--bg-color); /* 微底色區分區塊 */
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
-        ul, ol { padding-left: 20px; margin-top: 5px; }
-        li { margin-bottom: 24px; }
+        .skill-media-container:empty { display: none; }
+        
+        .skill-media-container .img-group {
+            flex: 1;
+            min-width: 280px;
+            max-width: calc(50% - 10px); /* 電腦版並排顯示 */
+            margin: 0;
+        }
+        .skill-media-container .img-group:first-child:nth-last-child(1) {
+            max-width: 800px; 
+        }
+
         .tip {
             background-color: var(--tip-bg); border-left: 4px solid var(--tip-border);
-            padding: 10px 15px; margin: 12px 0 0 0; font-size: 15px; color: var(--tip-text);
+            padding: 10px 15px; margin: 10px 0; font-size: 15px; color: var(--tip-text);
             border-radius: 0 4px 4px 0; transition: background-color 0.3s, color 0.3s, border-color 0.3s;
             font-weight: 500;
         }
         .hero-tag { color: var(--accent-color); font-weight: bold; }
 
-        /* === 參考資料區塊 === */
-        .reference-list { list-style-type: disc; margin-bottom: 15px; }
+        /* 參考資料專用簡單佈局 */
+        .reference-card { margin: 25px 30px; padding: 25px; }
+        .reference-list { list-style-type: disc; margin-bottom: 15px; padding-left: 20px; }
         .reference-list li { margin-bottom: 10px; }
         .reference-list a { color: var(--link-color); text-decoration: none; font-weight: bold; transition: color 0.2s; }
         .reference-list a:hover { color: var(--accent-color); text-decoration: underline; }
         .disclaimer { font-size: 13px; color: var(--text-light); border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 20px; transition: color 0.3s, border-color 0.3s; }
 
         /* === 🎬 圖片與影片區塊統一相框樣式 === */
-        .img-group { margin: 0; margin-bottom: 15px; width: 100%; text-align: center; }
+        .img-group { margin: 0; width: 100%; text-align: center; position: relative; }
         .img-caption { font-size: 14px; color: var(--text-light); margin-top: 8px; font-weight: bold; line-height: 1.3; transition: color 0.3s; }
         
         .gallery-item {
@@ -377,7 +415,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
         }
 
-        /* === 🌟 畫廊完美統一尺寸版 (無論原片多小都強制撐滿，控制條永遠貼底) === */
+        /* === 🌟 透明模糊背景的燈箱畫廊 === */
         #mediaModal {
             display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6); 
@@ -419,13 +457,16 @@
             .sidebar a { display: inline-block; margin-right: 10px; margin-bottom: 10px; }
             .music-player-container { padding-top: 15px; margin-top: 15px; }
             #backToTopBtn { bottom: 20px; right: 20px; padding: 12px; }
-            .text-column, .media-column { flex: 100%; }
-            #prevImgBtn, #nextImgBtn { font-size: 24px; padding: 10px; }
             
             .floating-mascot { top: 10px; right: 10px; gap: 8px; }
             .floating-mascot img { width: 55px; height: 55px; border-width: 2px; }
             .mascot-speech { padding: 6px 12px; font-size: 12px; }
             .mascot-speech::after { right: -8px; border-width: 6px 0 6px 8px; }
+
+            .skill-card { margin: 15px 0; padding: 15px; }
+            .skill-media-container { padding: 10px; }
+            .skill-media-container .img-group { max-width: 100%; width: 100%; }
+            .reference-card { margin: 15px 0; padding: 15px; }
 
             .modal-media { width: 95vw; aspect-ratio: 16 / 9; max-width: none; }
         }
@@ -438,7 +479,7 @@
         <h2>🎯 快速導覽 
             <button id="themeToggleBtn" title="切換深淺色模式">🌙</button>
         </h2>
-        <a href="#boss1" class="nav-link" data-target="boss1">⚔️ 一王：笑妝娘</a>
+        <a href="#boss1" class="nav-link active" data-target="boss1">⚔️ 一王：笑妝娘</a>
         <a href="#boss2" class="nav-link" data-target="boss2">⚔️ 二王：唐醉</a>
         <a href="#boss3" class="nav-link" data-target="boss3">⚔️ 三王：柳公子</a>
         <a href="#boss4" class="nav-link" data-target="boss4">⚔️ 四王：阿史那承慶</a>
@@ -480,7 +521,7 @@
 <div class="container">
     <div class="header-title" id="top">
         《劍網三》閬風懸城全機制實戰攻略<br>
-        <span style="font-size: 18px; color: var(--text-light); font-weight: normal;"> 考前衝刺講義(V3.0)</span>
+        <span style="font-size: 18px; color: var(--text-light); font-weight: normal;"> 考前衝刺講義(V4.0 - 全新卡片排版)</span>
     </div>
 
     <div class="section-block boss-section" id="boss1">
@@ -488,11 +529,11 @@
             <span>⚔️ 一王：笑妝娘</span>
             <span class="toggle-icon">▼</span>
         </div>
-        
         <div class="section-content">
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 基礎機制與場地</h3>
+            
+            <div class="skill-card">
+                <h3 class="skill-title">📌 基礎機制與場地</h3>
+                <div class="skill-desc">
                     <ul>
                         <li>王選定位置後不會移動。</li>
                         <li>場上9個立柱。王血量低於80% / 50% / 11%時，立柱分別下降2 / 3 / 4個並移動到固定位置，不再產生音波。</li>
@@ -501,7 +542,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <img src="1.jpg" class="gallery-item" alt="場地立柱分佈示意圖">
                         <figcaption class="img-caption">場地立柱分佈示意圖</figcaption>
@@ -513,63 +554,89 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 BOSS技能</h3>
-                    <ul>
-                        <li><strong>靈簪鎖魂：</strong>隨機點1人引導扇形，扇形殘留5秒。
-                            <div class="tip">💡 ：被點出人群。</div>
-                        </li>
-                        <li><strong>祭跪雙墳：</strong>二次長矩形：首次原地釋放，第二次瞬移至固定位置。
-                            <div class="tip">💡 ：躲開，連吃兩次會死。</div>
-                        </li>
-                        <li><strong>悲音慟潮：</strong>王瞬移到隨機柱子旁放幻歌（蓄力8秒無敵），幻歌碰到其他柱子會再次觸發幻歌。
-                            <div class="tip">💡 ：二段跳（蓄力時無法扶搖）。</div>
-                        </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>墳音咒：</strong>隨機點1人6秒後排大圈，圈碰到柱子會共鳴產生幻歌。
-                            <div class="tip">💡 ：往沒有柱子的方向排圈，圈出聶雲走。</div>
-                        </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>慟哭震地：</strong>讓所有升起柱子放幻歌。
-                            <div class="tip">💡 ：在兩個幻歌交叉的位置二段跳。</div>
-                        </li>
-                    </ul>
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 靈簪鎖魂</h3>
+                <div class="skill-desc">
+                    <p>隨機點1人引導扇形，扇形殘留5秒。</p>
+                    <div class="tip">💡 ：被點出人群。</div>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="3.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">靈簪鎖魂</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 祭跪雙墳</h3>
+                <div class="skill-desc">
+                    <p>二次長矩形：首次原地釋放，第二次瞬移至固定位置。</p>
+                    <div class="tip">💡 ：躲開，連吃兩次會死。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="4.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">祭跪雙墳</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 悲音慟潮</h3>
+                <div class="skill-desc">
+                    <p>王瞬移到隨機柱子旁放幻歌（蓄力8秒無敵），幻歌碰到其他柱子會再次觸發幻歌。</p>
+                    <div class="tip">💡 ：二段跳（蓄力時無法扶搖）。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="5.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">悲音慟潮</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">【英雄】墳音咒</span></h3>
+                <div class="skill-desc">
+                    <p>隨機點1人6秒後排大圈，圈碰到柱子會共鳴產生幻歌。</p>
+                    <div class="tip">💡 ：往沒有柱子的方向排圈，圈出聶雲走。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="6.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">墳音咒</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">【英雄】慟哭震地</span></h3>
+                <div class="skill-desc">
+                    <p>讓所有升起柱子放幻歌。</p>
+                    <div class="tip">💡 ：在兩個幻歌交叉的位置二段跳。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="7.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">慟哭震地</figcaption>
                     </figure>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <div class="section-block boss-section" id="boss2">
+    <div class="section-block boss-section collapsed" id="boss2">
         <div class="section-header" onclick="toggleSection(this)">
             <span>⚔️ 二王：唐醉</span>
             <span class="toggle-icon">▼</span>
         </div>
-        
         <div class="section-content">
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 基礎機制與場地</h3>
+            
+            <div class="skill-card">
+                <h3 class="skill-title">📌 基礎機制與場地</h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>中心大風扇：</strong>風扇開啟時全場無法跳躍與扶搖。</li>
                         <li><strong>中心風區：</strong>進入會被吹到13尺高空，技能欄替換成QTE1「乘風」技能，往當前面向衝刺。主動離開中心會重製輕功調息。</li>
@@ -578,7 +645,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                      <figure class="img-group">
                         <video src="8.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">中心風區與QTE</figcaption>
@@ -586,32 +653,27 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 BOSS技能（P1常規時間）</h3>
-                    <ul>
-                        <li><strong>三疊殺：</strong>對一仇造成三次越來越痛的穿刺外功傷害。
-                            <div class="tip">💡 ：坦克開減傷。</div>
-                        </li>
-                        <li><strong>魂鎖牽：</strong>點名4名遠程，與最近玩家兩兩連線7秒。若自然結束未拉斷，扣除99.99%真實傷害並附加永久易傷(1層20%)。
-                            <div class="tip">💡 ：連線兩人往反方向跑以拉斷連線（常規時需大於40尺，千機階段縮短為20尺）。</div>
-                        </li>
-                        <li><strong>透骨刺：</strong>隨機點名衝鋒，造成分攤傷害並附帶再中即死的致命標記。
-                            <div class="tip">💡 ：必須 1+4人（共5人）抱團承傷。</div>
-                        </li>
-                        <li><strong>碎星(血量低於70/<span class="hero-tag">80%</span>)：</strong>場上出7個圈（其中兩個有「能量灌注」發光特效），落地造成全團AOE與永久易傷。英雄P2階段僅出在首領半場。
-                            <div class="tip">💡 ：兩個坦去踩2個有能量灌注特效的圈，其他人去踩剩餘5個圈。</div>
-                        </li>
-                        <li><strong>毒變(血量低於70/<span class="hero-tag">80%</span>)：</strong>優先點2/<span class="hero-tag">3</span>遠程DPS獲得debuff翎刃毒，會傳染，驅散後場上會殘留毒圈。若場上受風力影響的毒圈≥4個則全場秒殺。（英雄P2階段不放）
-                            <div class="tip">💡 ：在場中抱團群驅，讓中心風力把毒圈吹散消失；若沒群驅，則在中心「分散」等驅，避免傳染給隊友。</div>
-                        </li>
-                    </ul>
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 三疊殺</h3>
+                <div class="skill-desc">
+                    <p>對一仇造成三次越來越痛的穿刺外功傷害。</p>
+                    <div class="tip">💡 ：坦克開減傷。</div>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <img src="9.jpg" class="gallery-item" alt="三疊殺">
                         <figcaption class="img-caption">三疊殺</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 魂鎖牽</h3>
+                <div class="skill-desc">
+                    <p>點名4名遠程，與最近玩家兩兩連線7秒。若自然結束未拉斷，扣除99.99%真實傷害並附加永久易傷(1層20%)。</p>
+                    <div class="tip">💡 ：連線兩人往反方向跑以拉斷連線（常規時需大於40尺，千機階段縮短為20尺）。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="10.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">魂鎖牽</figcaption>
@@ -620,10 +682,30 @@
                         <video src="11.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沒拉斷</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 透骨刺</h3>
+                <div class="skill-desc">
+                    <p>隨機點名衝鋒，造成分攤傷害並附帶再中即死的致命標記。</p>
+                    <div class="tip">💡 ：必須 1+4人（共5人）抱團承傷。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="12.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">透骨刺</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 碎星 <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">(血量低於70/80%)</span></h3>
+                <div class="skill-desc">
+                    <p>場上出7個圈（其中兩個有「能量灌注」發光特效），落地造成全團AOE與永久易傷。英雄P2階段僅出在首領半場。</p>
+                    <div class="tip">💡 ：兩個坦去踩2個有能量灌注特效的圈，其他人去踩剩餘5個圈。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="13.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">碎星</figcaption>
@@ -632,6 +714,16 @@
                         <video src="14.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">能量灌注特效</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 毒變 <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">(血量低於70/80%)</span></h3>
+                <div class="skill-desc">
+                    <p>優先點2/<span class="hero-tag">3</span>遠程DPS獲得debuff翎刃毒，會傳染，驅散後場上會殘留毒圈。若場上受風力影響的毒圈≥4個則全場秒殺。（英雄P2階段不放）</p>
+                    <div class="tip">💡 ：在場中抱團群驅，讓中心風力把毒圈吹散消失；若沒群驅，則在中心「分散」等驅，避免傳染給隊友。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="15.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">毒變</figcaption>
@@ -639,9 +731,9 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3><span class="hero-tag">📌 英雄新增（血量低於30%進P2）</span></h3>
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">📌 英雄新增（血量低於30%進P2）</span></h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>千機·蝕地瘴（低於30%）：</strong>全場高度1.5尺以下每秒高額傷害（非坦職業約2秒即死）。每五次小圈釋放一次大圈，兩輪後階段結束。
                             <div class="tip">💡 ：全團進中心風區升空。</div>
@@ -654,7 +746,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                      <figure class="img-group">
                         <video src="16.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">星火</figcaption>
@@ -669,19 +761,20 @@
                     </figure>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <div class="section-block boss-section" id="boss3">
+    <div class="section-block boss-section collapsed" id="boss3">
         <div class="section-header" onclick="toggleSection(this)">
             <span>⚔️ 三王：柳公子</span>
             <span class="toggle-icon">▼</span>
         </div>
-        
         <div class="section-content">
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 基礎機制與場地</h3>
+            
+            <div class="skill-card">
+                <h3 class="skill-title">📌 基礎機制與地下管道</h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>扇風形態（普攻）：</strong>正面4尺121度扇形AOE，無法扶搖。 &lt;&lt;施展聚鋒切換！
                             <div class="tip">💡 ：需至少2人承傷，人不夠會被擊退。</div>
@@ -694,7 +787,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <img src="19.jpg" class="gallery-item" alt="相連地下管道">
                         <figcaption class="img-caption">相連地下管道</figcaption>
@@ -702,26 +795,14 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 BOSS技能（貫穿全程）</h3>
-                    <ul>
-                        <li><strong>旋扇/裂風：</strong>點名1人注視5秒後放扇子追擊，撞到人或柱會引爆全團AOE並分裂射出扇骨，追擊5秒後扇子威力衰減。<br>
-                            【普/英】第一次扇子引爆後會額外生出一把旋扇追最近的人。
-                            <div class="tip">💡 ：被點名到場邊安排的點位，等扇子變白色後扶搖起跳。若5秒前被扇子追上則30尺致死AOE。</div>
-                        </li>
-                        <li><strong>聚鋒 / 散鋒：</strong>點名5秒引導劍氣，命中玩家後在其身後釋放30尺扇形AOE的二段傷害。
-                            <div class="tip">💡 ：被點名到安排的點位，其他人避開連線或其身後。</div>
-                        </li>
-                        <li><strong>掠影探囊：</strong>點名1人失財debuff並偷錢後放扇形AOE。隨後根據玩家身上金幣>2萬追加90°扇形AOE；金幣<2萬則朝反向放270°扇形AOE。
-                            <div class="tip">💡 ：身上金幣>2萬到安排的點位，<2萬則原地不動。（英雄建議一定要帶足2萬...）</div>
-                        </li>
-                        <li><strong>三疊扇：</strong>連續點名3人，交替釋放旋扇與聚鋒。
-                            <div class="tip">💡 ：被點名者依序上場邊安排的點。</div>
-                        </li>
-                    </ul>
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 旋扇 / 裂風</h3>
+                <div class="skill-desc">
+                    <p>點名1人注視5秒後放扇子追擊，撞到人或柱會引爆全團AOE並分裂射出扇骨，追擊5秒後扇子威力衰減。<br>
+                    【普/英】第一次扇子引爆後會額外生出一把旋扇追最近的人。</p>
+                    <div class="tip">💡 ：被點名到場邊安排的點位，等扇子變白色後扶搖起跳。若5秒前被扇子追上則30尺致死AOE。</div>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="20.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">旋扇追擊</figcaption>
@@ -730,6 +811,16 @@
                         <video src="21.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">裂風及第二把扇子</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 聚鋒 / 散鋒</h3>
+                <div class="skill-desc">
+                    <p>點名5秒引導劍氣，命中玩家後在其身後釋放30尺扇形AOE的二段傷害。</p>
+                    <div class="tip">💡 ：被點名到安排的點位，其他人避開連線或其身後。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="22.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">聚鋒</figcaption>
@@ -738,10 +829,30 @@
                         <video src="23.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">聚鋒(被擋線)</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 掠影探囊</h3>
+                <div class="skill-desc">
+                    <p>點名1人失財debuff並偷錢後放扇形AOE。隨後根據玩家身上金幣>2萬追加90°扇形AOE；金幣<2萬則朝反向放270°扇形AOE。</p>
+                    <div class="tip">💡 ：身上金幣>2萬到安排的點位，<2萬則原地不動。（英雄建議一定要帶足2萬...）</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="24.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">掠影探囊</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 三疊扇</h3>
+                <div class="skill-desc">
+                    <p>連續點名3人，交替釋放旋扇與聚鋒。</p>
+                    <div class="tip">💡 ：被點名者依序上場邊安排的點。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="123.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">三疊扇</figcaption>
@@ -749,9 +860,9 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3><span class="hero-tag">📌 英雄P2（BOSS血量80%～40%新增）</span></h3>
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">📌 【英雄P2】神秘裝置與傳功</span></h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>神秘裝置（繳械）：</strong>繳械一名玩家的武器放左下裝置，須根據被繳械的玩家心法去右上裝置放對應武器。
                             <div class="tip">💡 ：點外攻-奶放、點內攻-T放、點奶-內放、點T-外放。</div>
@@ -759,19 +870,11 @@
                             <div class="tip">💡 ：被繳械者去撿地上的金光拿回武器。</div>
                         </li>
                         <li><strong>傳功：</strong>玩家將武器放右上裝置後，其他人交互武器架蓄力傳功。
-                            <div class="tip">💡 ：安排至少2人以上傳功。</div>
-                            <div class="tip">💡 ：傳功時也會被技能點名，且受到傷害會被中斷傳功。</div>
-                        </li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 30px;"><span class="hero-tag">📌 英雄P3（BOSS血量低於40%）</span></h3>
-                    <ul>
-                        <li><strong>沾衣哨：</strong>點名15秒，結束時原地爆發上下19尺的立體穿透AOE。
-                            <div class="tip">💡 ：被點名的人，站上相連柱子的其中一端，隊友站上另一端利用人數差把他升上去。因高度差使AOE不會炸到大團。</div>
+                            <div class="tip">💡 ：安排至少2人以上傳功。<br>💡 ：傳功時也會被技能點名，且受到傷害會被中斷傳功。</div>
                         </li>
                     </ul>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="25.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">神秘裝置</figcaption>
@@ -784,6 +887,16 @@
                         <img src="27.jpg" class="gallery-item" alt="傳功">
                         <figcaption class="img-caption">傳功</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">📌 【英雄P3】沾衣哨</span></h3>
+                <div class="skill-desc">
+                    <p>點名15秒，結束時原地爆發上下19尺的立體穿透AOE。</p>
+                    <div class="tip">💡 ：被點名的人，站上相連柱子的其中一端，隊友站上另一端利用人數差把他升上去。因高度差使AOE不會炸到大團。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="28.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">沾衣哨被點名</figcaption>
@@ -794,19 +907,20 @@
                     </figure>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <div class="section-block boss-section" id="boss4">
+    <div class="section-block boss-section collapsed" id="boss4">
         <div class="section-header" onclick="toggleSection(this)">
             <span>⚔️ 四王：阿史那承慶</span>
             <span class="toggle-icon">▼</span>
         </div>
-        
         <div class="section-content">
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 基礎機制與場地</h3>
+            
+            <div class="skill-card">
+                <h3 class="skill-title">📌 基礎機制與場地</h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>戰鬥場地：</strong>九宮格，開怪時只有中間一格安全區。</li>
                         <li><strong>開山（P1普攻）：</strong>單體傷害，附帶「搏命」層數。
@@ -817,7 +931,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <img src="29.jpg" class="gallery-item" alt="九宮格">
                         <figcaption class="img-caption">九宮格</figcaption>
@@ -825,9 +939,9 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 BOSS技能（P1）</h3>
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 魂火喚醒與爆發</h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>魂火爆發·塵：</strong>王在九宮格特定格子造成致死AOE。</li>
                         <li><strong>魂火喚醒：</strong>激活除了中間以外的8個格子（紫色顯示）。
@@ -836,38 +950,29 @@
                         <li><strong>喚醒：</strong>點名2人（1近1遠）獲得debuff喚醒，踩紫色格子可以熄滅魂火；同時讓這2人周圍12尺的隊友獲得5層「喚」增傷Buff（1層約增傷2%）。
                             <div class="tip">💡 ：中喚醒點名的人按分配消紫色格子。點名前抱團蹭增傷Buff。</div>
                         </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>死侍：</strong>熄滅魂火處出現死侍小怪，若存活≥4個則全團致死。
-                            <div class="tip">💡 ：死侍出現時自帶100%減傷Buff，必須先驅散！且死侍會讀條蓄減傷必須打斷。</div>
-                        </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>死亡獻祭（紫圈）與鬼火球：</strong>死侍死後原地出紫圈，並飄出一顆鬼火球往BOSS移動。
-                            <div class="tip">💡 ：玩家踩進紫圈會變身死侍（獲得治療吸收盾及1【破】技能），奶媽需奶爆這個盾；同時必須要有玩家去觸碰擋下鬼火球（觸碰後10尺綠圈內玩家獲得1層「喚」），讓王碰到鬼火球會回血。</div>
-                        </li>
-                        <li><strong>破：</strong>王無敵蓄力，魂火會先對「兩列（共六個格子）」示警後隱匿，隨後爆發傷害。
-                            <div class="tip">💡 ：找沒有被魂火覆蓋的「安全區格子」躲避。</div>
-                        </li>
-                        <li><strong>歸塵：</strong>點2/3/4名遠程7秒debuff塵，腳底出現箭頭，延遲後對箭頭方向發射扇形AOE。
-                            <div class="tip">💡 ：大團在安全區格子中間抱，被點名的人箭頭朝外站到格子的邊緣排。<br>
-                            *被點的人頭頂buff消失後左右動一下或往中間動可以不吃傷害。</div>
-                        </li>
-                        <li><strong>處決 / 忘川：</strong>擊飛當前一仇到空中10尺並定身，隨後釋放至少需1+1人分擔傷害的圈（上下高度4尺），否則即死。
-                            <div class="tip">💡 ：安排1副T扶搖承傷。</div>
-                        </li>
-                        <li><strong>斬：</strong>王讀條5次，特效爲腳下(黃光）或頭頂(紅光），隨後按特效順序對地/空中玩家放AOE。
-                            <div class="tip">💡 ：記好顏色順序，黃跳紅不跳。<br>
-                            *如連續2次黃光可二段跳。<br>
-                            *如最後3-4次都是黃光可直接扶搖跳。</div>
-                        </li>
-                        <li><strong>劫（低於50%、25%）：</strong>場邊出鬼狼頭走直線，碰到亮著魂火格子（紫色）會觸發整行整列十字秒殺。<br>
-                            <span class="hero-tag">【英雄】</span>：英雄25%出鬼狼頭時，會同時翻轉四個角落的魂火，鬼狼頭階段結束再次翻轉十字的格子。
-                            <div class="tip">💡 ：提前拉到安全格子，遠程站安全點。</div>
-                        </li>
                     </ul>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="30.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">魂火喚醒</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">【英雄】死侍與死亡獻祭</span></h3>
+                <div class="skill-desc">
+                    <ul>
+                        <li><strong>死侍：</strong>熄滅魂火處出現死侍小怪，若存活≥4個則全團致死。
+                            <div class="tip">💡 ：死侍出現時自帶100%減傷Buff，必須先驅散！且死侍會讀條蓄減傷必須打斷。</div>
+                        </li>
+                        <li><strong>死亡獻祭（紫圈）與鬼火球：</strong>死侍死後原地出紫圈，並飄出一顆鬼火球往BOSS移動。
+                            <div class="tip">💡 ：玩家踩進紫圈會變身死侍（獲得治療吸收盾及1【破】技能），奶媽需奶爆這個盾；同時必須要有玩家去觸碰擋下鬼火球（觸碰後10尺綠圈內玩家獲得1層「喚」），讓王碰到鬼火球會回血。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="31.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">死侍</figcaption>
@@ -876,18 +981,59 @@
                         <video src="32.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紫圈&鬼火球</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 破</h3>
+                <div class="skill-desc">
+                    <p>王無敵蓄力，魂火會先對「兩列（共六個格子）」示警後隱匿，隨後爆發傷害。</p>
+                    <div class="tip">💡 ：找沒有被魂火覆蓋的「安全區格子」躲避。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="33.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">破</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 歸塵</h3>
+                <div class="skill-desc">
+                    <p>點2/3/4名遠程7秒debuff塵，腳底出現箭頭，延遲後對箭頭方向發射扇形AOE。</p>
+                    <div class="tip">💡 ：大團在安全區格子中間抱，被點名的人箭頭朝外站到格子的邊緣排。<br>
+                    *被點的人頭頂buff消失後左右動一下或往中間動可以不吃傷害。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="34.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">歸塵</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 處決 / 忘川</h3>
+                <div class="skill-desc">
+                    <p>擊飛當前一仇到空中10尺並定身，隨後釋放至少需1+1人分擔傷害的圈（上下高度4尺），否則即死。</p>
+                    <div class="tip">💡 ：安排1副T扶搖承傷。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="35.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">處決 / 忘川</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 斬</h3>
+                <div class="skill-desc">
+                    <p>王讀條5次，特效爲腳下(黃光）或頭頂(紅光），隨後按特效順序對地/空中玩家放AOE。</p>
+                    <div class="tip">💡 ：記好顏色順序，黃跳紅不跳。<br>*如連續2次黃光可二段跳。<br>*如最後3-4次都是黃光可直接扶搖跳。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="36.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬</figcaption>
@@ -896,6 +1042,17 @@
                         <video src="37.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紅紅黃紅黃</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 劫 <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">(血量低於50%、25%)</span></h3>
+                <div class="skill-desc">
+                    <p>場邊出鬼狼頭走直線，碰到亮著魂火格子（紫色）會觸發整行整列十字秒殺。<br>
+                    <span class="hero-tag">【英雄】</span>：英雄25%出鬼狼頭時，會同時翻轉四個角落的魂火，鬼狼頭階段結束再次翻轉十字的格子。</p>
+                    <div class="tip">💡 ：提前拉到安全格子，遠程站安全點。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="38.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">鬼頭狼</figcaption>
@@ -903,34 +1060,28 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 BOSS技能（P2：2:03/<span class="hero-tag">2:30</span> 下階）</h3>
-                    <ul>
-                        <li><strong>巨刃掠影：</strong>轉階段釋放，全團AOE並附帶5秒dot。
-                            <div class="tip">💡 ：很癢隨便刷。</div>
-                        </li>
-                        <li><strong>黃泉斬：</strong>朝正前、左後、右後依次釋放扇形AOE。後續3次普攻變為「黃泉」，附帶矩形AOE，疊3層即死。
-                            <div class="tip">💡 *大團*：站BOSS右後，第二下扇形（左後）劈完往左一步即可。<br>
-                            💡 *坦克*：黃泉斬第一下釋放時往左或右躲，躲完回原位引導黃泉普攻，在當前T吃兩下後副T進面向接仇。</div>
-                        </li>
-                        <li><strong>風暴連擊：</strong>朝前方放3次延遲2/2/4秒順序隨機的黃圈，無人抵擋則全團穿刺AOE並易傷。
-                            <div class="tip">💡 ：坦進黃圈，在圈結算過半時按QTE「擋」（沒有要按QTE的坦站黃圈內也不影響）。</div>
-                        </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>汲取：</strong>王蓄力獲得200層無敵盾和AOE，18秒未消完層數全團秒殺。
-                            <div class="tip">💡 ：轉掉死侍後D坦踩紫圈變死侍，貼王使用1【破】消王的盾。<br>
-                            💡 *治療*：開減傷或給葵，否則AOE必死，奶爆有吸收盾的人。</div>
-                        </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>斬破：</strong>釋放一次「斬」與「破」，連續三波。
-                            <div class="tip">💡 ：同時處理聚氣（跳或不跳）與找安全區格子。</div>
-                        </li>
-                    </ul>
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】巨刃掠影</h3>
+                <div class="skill-desc">
+                    <p>轉階段釋放，全團AOE並附帶5秒dot。</p>
+                    <div class="tip">💡 ：很癢隨便刷。</div>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <img src="39.jpg" class="gallery-item" alt="巨刃掠影">
                         <figcaption class="img-caption">巨刃掠影</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】黃泉斬</h3>
+                <div class="skill-desc">
+                    <p>朝正前、左後、右後依次釋放扇形AOE。後續3次普攻變為「黃泉」，附帶矩形AOE，疊3層即死。</p>
+                    <div class="tip">💡 *大團*：站BOSS右後，第二下扇形（左後）劈完往左一步即可。<br>
+                    💡 *坦克*：黃泉斬第一下釋放時往左或右躲，躲完回原位引導黃泉普攻，在當前T吃兩下後副T進面向接仇。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="40.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">黃泉斬</figcaption>
@@ -939,66 +1090,68 @@
                         <video src="41.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">黃泉破</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】風暴連擊</h3>
+                <div class="skill-desc">
+                    <p>朝前方放3次延遲2/2/4秒順序隨機的黃圈，無人抵擋則全團穿刺AOE並易傷。</p>
+                    <div class="tip">💡 ：坦進黃圈，在圈結算過半時按QTE「擋」（沒有要按QTE的坦站黃圈內也不影響）。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="42.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">風暴連擊</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">【英雄】汲取</span></h3>
+                <div class="skill-desc">
+                    <p>王蓄力獲得200層無敵盾和AOE，18秒未消完層數全團秒殺。</p>
+                    <div class="tip">💡 ：轉掉死侍後D坦踩紫圈變死侍，貼王使用1【破】消王的盾。<br>
+                    💡 *治療*：開減傷或給葵，否則AOE必死，奶爆有吸收盾的人。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="43.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">汲取</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">【英雄】斬破</span></h3>
+                <div class="skill-desc">
+                    <p>釋放一次「斬」與「破」，連續三波。</p>
+                    <div class="tip">💡 ：同時處理聚氣（跳或不跳）與找安全區格子。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="44.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬破</figcaption>
                     </figure>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <div class="section-block boss-section" id="boss5">
+    <div class="section-block boss-section collapsed" id="boss5">
         <div class="section-header" onclick="toggleSection(this)">
             <span>⚔️ 五王：唐懷仁</span>
             <span class="toggle-icon">▼</span>
         </div>
-        
         <div class="section-content">
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 核心機制</h3>
-                    <ul>
-                        <li><strong>替厄銅犴（機甲）：</strong>開場領技能，可放置機甲在腳下，與使用「轉移」與機甲互換位置。若中必死Debuff，也可轉移傳給機甲。</li>
-                    </ul>
-
-                    <h3 style="margin-top: 30px;">📌 BOSS技能（P1：唐懷仁100-50%）</h3>
-                    <ul>
-                        <li><strong>充能：</strong>每秒充能0.5%，滿了全團秒殺。</li>
-                        <li><strong>磁震：</strong>穿刺AOE與持續掉血，期間獲得debuff磁震：轉移CD變爲8秒。
-                            <div class="tip">💡 ：減傷有效。</div>
-                        </li>
-                        <li><strong>索命箭：</strong>點3/<span class="hero-tag">5</span>名遠程，5秒後後腳下25尺大圈AOE。
-                            <div class="tip">💡 ：遠程點到去安排的位置，等結算出特效後，使用「轉移」跟提前放置在大團的機甲換位規避。</div>
-                        </li>
-                        <li><strong>陷陣機卒：</strong>普攻附帶易傷，死後自爆全團AOE。
-                            <div class="tip">💡 ：副坦拉著群即可，易傷太高就換仇。</div>
-                        </li>
-                        <li><strong>蘊雷機瓮：</strong>同時出兩隻，不斷讀條充能，只可打斷一次。
-                            <div class="tip">💡 ：轉火時不要提早打斷，讓安排的人壓秒斷。</div>
-                            <div class="tip">💡 ：輸出夠快能將王壓下50%血可以無視。</div>
-                        </li>
-                        <li><strong>充能餘波：</strong>場中擴散幻歌（觸碰即死），無法扶搖。<br>
-                            <span class="hero-tag">【英雄】</span>：幻歌到場邊後會原路收縮回場中。
-                            <div class="tip">💡 ：利用跟機甲「轉移」換位來規避。</div>
-                        </li>
-                        <li><strong>千機匣·毒剎：</strong>先後放兩個機關，結算時對5-45尺環形區域造成致死傷害。
-                            <div class="tip">💡 放二走一 ：到第二個機關放機甲後走到機關一等結算，隨後轉移到機關二的位置。</div>
-                        </li>
-                        <li><strong>千機匣·連弩：</strong>正面6尺寬矩形引導AOE。
-                            <div class="tip">💡 ：不會擊退的木龍牙。</div>
-                        </li>
-                    </ul>
+            
+            <div class="skill-card">
+                <h3 class="skill-title">📌 核心機制：替厄銅犴（機甲）</h3>
+                <div class="skill-desc">
+                    <p>開場領技能，可放置機甲在腳下，與使用「轉移」與機甲互換位置。若中必死Debuff，也可轉移傳給機甲。</p>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <img src="45.jpg" class="gallery-item" alt="替厄銅犴領取">
                         <figcaption class="img-caption">替厄銅犴領取</figcaption>
@@ -1011,14 +1164,73 @@
                         <img src="47.jpg" class="gallery-item" alt="移轉">
                         <figcaption class="img-caption">轉移</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P1】充能與磁震</h3>
+                <div class="skill-desc">
+                    <ul>
+                        <li><strong>充能：</strong>每秒充能0.5%，滿了全團秒殺。</li>
+                        <li><strong>磁震：</strong>穿刺AOE與持續掉血，期間獲得debuff磁震：轉移CD變爲8秒。
+                            <div class="tip">💡 ：減傷有效。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="skill-media-container"></div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P1】索命箭</h3>
+                <div class="skill-desc">
+                    <p>點3/<span class="hero-tag">5</span>名遠程，5秒後後腳下25尺大圈AOE。</p>
+                    <div class="tip">💡 ：遠程點到去安排的位置，等結算出特效後，使用「轉移」跟提前放置在大團的機甲換位規避。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="48.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">索命箭</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P1】陷陣機卒 & 蘊雷機瓮</h3>
+                <div class="skill-desc">
+                    <ul>
+                        <li><strong>陷陣機卒：</strong>普攻附帶易傷，死後自爆全團AOE。
+                            <div class="tip">💡 ：副坦拉著群即可，易傷太高就換仇。</div>
+                        </li>
+                        <li><strong>蘊雷機瓮：</strong>同時出兩隻，不斷讀條充能，只可打斷一次。
+                            <div class="tip">💡 ：轉火時不要提早打斷，讓安排的人壓秒斷。<br>💡 ：輸出夠快能將王壓下50%血可以無視。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="49.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">蘊雷機瓮</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P1】充能餘波 & 千機匣</h3>
+                <div class="skill-desc">
+                    <ul>
+                        <li><strong>充能餘波：</strong>場中擴散幻歌（觸碰即死），無法扶搖。<br>
+                            <span class="hero-tag">【英雄】</span>：幻歌到場邊後會原路收縮回場中。
+                            <div class="tip">💡 ：利用跟機甲「轉移」換位來規避。</div>
+                        </li>
+                        <li><strong>千機匣·毒剎：</strong>先後放兩個機關，結算時對5-45尺環形區域造成致死傷害。
+                            <div class="tip">💡 放二走一 ：到第二個機關放機甲後走到機關一等結算，隨後轉移到機關二的位置。</div>
+                        </li>
+                        <li><strong>千機匣·連弩：</strong>正面6尺寬矩形引導AOE。
+                            <div class="tip">💡 ：不會擊退的木龍牙。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="50.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">充能餘波</figcaption>
@@ -1038,55 +1250,71 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3>📌 BOSS技能（P2：須羅巨傀）</h3>
-                    <ul>
-                        <li><strong>斬擊：</strong>正面30°扇形AOE 。<br>
-                            <span class="hero-tag">【英雄】</span>：隨機方向釋放斬擊，3秒後接半徑30尺330度超大迴旋斬。
-                            <div class="tip">💡 ：看蜘蛛頭朝哪邊，斬擊時就往同一側躲扇形，等斬擊結束走回第一刀的30°扇形即可。</div>
-                        </li>
-                        <li><strong>玄陰霹靂彈：</strong>點名一仇，點名及結算時高額傷害。
-                            <div class="tip">💡 ：點名開減傷出人群15尺。</div>
-                        </li>
-                        <li><strong>落星·炙炎：</strong>朝隨機方向放50尺180度致死AOE，並殘留10秒火焰地板。
-                            <div class="tip">💡 ：躲開。</div>
-                        </li>
-                        <li><strong>連弩掃射：</strong>正面10尺寬矩形致死AOE，引導時旋轉一整圈（轉圈方向隨機）。
-                            <div class="tip">💡 ：大團提前在王正面放機甲後，走到王背後。等技能開始時使用「轉移」和機甲換位，再跟著連弩掃射轉圈的方向走幾步即可。</div>
-                        </li>
-                        <li><strong>飛鏢機關·切割：</strong>在隨機兩邊出現一行飛鏢橫穿全場。
-                            <div class="tip">💡 ：直接使用扶搖直上跳躍規避。</div>
-                            <div class="tip">💡 ：ESC自定義介面-提醒類提示<<會提示飛鏢方向</div>
-                        </li>
-                        <li><strong>落星·磁震：</strong>落下12個磁圈並殘留，踩到獲得debuff磁震。
-                            <div class="tip">💡 ：躲開。</div>
-                        </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>瞬殺箭：</strong>點10人獲得debuff機煞·瞬殺箭5秒，效果結束死亡。
-                            <div class="tip">💡 ：原地放機甲，點名一出就轉移。</div>
-                        </li>
-                        <li><span class="hero-tag">【英雄】</span><strong>天機雷印：</strong>點10人連線獲得debuff33309機煞·雷印10秒，效果結束死亡。
-                            <div class="tip">💡：點名一出就轉移。</div>
-                        </li>
-                    </ul>
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】斬擊</h3>
+                <div class="skill-desc">
+                    <p>正面30°扇形AOE 。<br>
+                    <span class="hero-tag">【英雄】</span>：隨機方向釋放斬擊，3秒後接半徑30尺330度超大迴旋斬。</p>
+                    <div class="tip">💡 ：看蜘蛛頭朝哪邊，斬擊時就往同一側躲扇形，等斬擊結束走回第一刀的30°扇形即可。</div>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="53.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">斬擊</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】玄陰霹靂彈</h3>
+                <div class="skill-desc">
+                    <p>點名一仇，點名及結算時高額傷害。</p>
+                    <div class="tip">💡 ：點名開減傷出人群15尺。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="54.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">玄陰霹靂彈</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】落星·炙炎</h3>
+                <div class="skill-desc">
+                    <p>朝隨機方向放50尺180度致死AOE，並殘留10秒火焰地板。</p>
+                    <div class="tip">💡 ：躲開。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="55.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">落星·炙炎</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】連弩掃射</h3>
+                <div class="skill-desc">
+                    <p>正面10尺寬矩形致死AOE，引導時旋轉一整圈（轉圈方向隨機）。</p>
+                    <div class="tip">💡 ：大團提前在王正面放機甲後，走到王背後。等技能開始時使用「轉移」和機甲換位，再跟著連弩掃射轉圈的方向走幾步即可。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="56.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">連弩掃射</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】飛鏢機關·切割</h3>
+                <div class="skill-desc">
+                    <p>在隨機兩邊出現一行飛鏢橫穿全場。</p>
+                    <div class="tip">💡 ：直接使用扶搖直上跳躍規避。</div>
+                    <div class="tip">💡 ：ESC自定義介面-提醒類提示<<會提示飛鏢方向</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <img src="57.jpg" class="gallery-item" alt="飛鏢提示">
                         <figcaption class="img-caption">飛鏢提示</figcaption>
@@ -1099,14 +1327,44 @@
                         <video src="59.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">飛鏢(轉移)</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title">⚔️ 【P2】落星·磁震</h3>
+                <div class="skill-desc">
+                    <p>落下12個磁圈並殘留，踩到獲得debuff磁震。</p>
+                    <div class="tip">💡 ：躲開。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="60.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">落星·磁震</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">【英雄】瞬殺箭</span></h3>
+                <div class="skill-desc">
+                    <p>點10人獲得debuff機煞·瞬殺箭5秒，效果結束死亡。</p>
+                    <div class="tip">💡 ：原地放機甲，點名一出就轉移。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="61.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">瞬殺箭</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">【英雄】天機雷印</span></h3>
+                <div class="skill-desc">
+                    <p>點10人連線獲得debuff33309機煞·雷印10秒，效果結束死亡。</p>
+                    <div class="tip">💡：點名一出就轉移。</div>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="62.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印</figcaption>
@@ -1114,9 +1372,9 @@
                 </div>
             </div>
 
-            <div class="content-grid">
-                <div class="text-column">
-                    <h3><span class="hero-tag">📌 牽機磁蕩（P3前英雄機制詳解）</span></h3>
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">📌 【英雄P3前】牽機磁蕩與炸彈平台</span></h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>牽機磁蕩（基礎機制）：</strong>王無敵，把全團吸到戰場一側，中間出雷障（玩家碰即死，機甲不會）分割場地。隨後在玩家側的場地落下雷晷·炙陽。</li>
                         <li><strong>赤陽·震鳴：</strong>雷晷·炙陽間隔1秒，不斷蓄力3秒釋放AOE。雷晷被擊破後生成殘骸，互動可獲得debuff 機煞·赤陽殘響。</li>
@@ -1124,28 +1382,9 @@
                         <li><strong>引爆：</strong>蓄力10秒，全場致死AOE。
                             <div class="tip">💡 ：需打斷。</div>
                         </li>
-                        <li><strong>蓄能橫掃：</strong>蓄力5秒，橫掃初始吸附的場地一側，對其中玩家造成致死傷害。</li>
-                        <li><strong>星火連珠：</strong>BOSS跳回牆上蓄力20秒，隨機順序裝填紅/藍珠子後發射，期間落下雷晷·炙陽（紅）和雷晷·玄陰（藍）。
-                            <div class="tip">💡 ：雷晷死後互動殘骸可以拿到對應顏色的debuff機煞·赤陽殘響(紅)和機煞·玄陰殘響(藍)，可以吸收對應顏色珠子的傷害。（期間轉移CD僅0.5秒，debuff消失前需換位把殘響傳給機甲，否則即死）</div>
-                        </li>
-                        <li><strong>天機雷印·厄：</strong>人與機甲連線10秒，效果結束玩家死亡，任意一方死亡/損毀移除效果。當機甲掉落至場地下方會直接損毀，同時玩家獲得QTE技能「易命」。
-                            <div class="tip">💡 ：跳出界外時，在界外按轉移讓機甲掉落在場外損毀獲得QTE，P3用。</div>
-                        </li>
                     </ul>
-
-                    <h3 style="margin-top: 30px;"><span class="hero-tag">📌 牽機磁蕩（吸人後連招處理流程）</span></h3>
-                    <div class="tip" style="background-color: transparent; border-color: var(--accent-color); color: var(--text-main); font-weight: 600; line-height: 1.8;">
-                        <span style="color: var(--accent-color); font-weight: bold;">💡 處理流程：</span><br>
-                        1. 被吸過去後，先在當前位置放置機甲。<br>
-                        2. 打掉場上的「雷晷」，去邊緣的炸彈平台打掉炸彈（注意必須打斷引爆讀條）。<br>
-                        3. 隨後互動雷晷殘骸可獲取紅色debuff。<br>
-                        4. 炸彈打掉後，在炸彈平台上對機甲使用「轉移」，將機甲換到平台上。<br>
-                        5. 平台會帶著機甲繞過中間的雷障前往另一半場，機甲會同時繼承你身上的紅色debuff。<br>
-                        6. 之後王會在初始半場放「蓄能橫掃」（致死），對面半場放「落星·炙炎」。<br>
-                        7. 等平台載著機甲繞到對面半場後，再次按「轉移」互換，你就會來到安全的另一半場，並重新拿回紅色debuff免疫「落星·炙炎」的傷害，完美規避！
-                    </div>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="63.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">牽機磁蕩</figcaption>
@@ -1154,10 +1393,35 @@
                         <video src="64.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">炸彈平台</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">📌 【英雄P3前】蓄能橫掃</span></h3>
+                <div class="skill-desc">
+                    <p>蓄力5秒，橫掃初始吸附的場地一側，對其中玩家造成致死傷害。</p>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="65.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">蓄能橫掃</figcaption>
                     </figure>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="skill-title"><span class="hero-tag">📌 【英雄P3前】星火連珠與雷印·厄</span></h3>
+                <div class="skill-desc">
+                    <ul>
+                        <li><strong>星火連珠：</strong>BOSS跳回牆上蓄力20秒，隨機順序裝填紅/藍珠子後發射，期間落下雷晷·炙陽（紅）和雷晷·玄陰（藍）。
+                            <div class="tip">💡 ：雷晷死後互動殘骸可以拿到對應顏色的debuff機煞·赤陽殘響(紅)和機煞·玄陰殘響(藍)，可以吸收對應顏色珠子的傷害。（期間轉移CD僅0.5秒，debuff消失前需換位把殘響傳給機甲，否則即死）</div>
+                        </li>
+                        <li><strong>天機雷印·厄：</strong>人與機甲連線10秒，效果結束玩家死亡，任意一方死亡/損毀移除效果。當機甲掉落至場地下方會直接損毀，同時玩家獲得QTE技能「易命」。
+                            <div class="tip">💡 ：跳出界外時，在界外按轉移讓機甲掉落在場外損毀獲得QTE，P3用。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="skill-media-container">
                     <figure class="img-group">
                         <video src="66.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">紅藍雷晷</figcaption>
@@ -1173,9 +1437,22 @@
                 </div>
             </div>
 
-            <div class="content-grid" style="border-bottom: none; background-color: rgba(231, 76, 60, 0.05);">
-                <div class="text-column">
-                    <h3>📌 P3（最終狂暴階段）</h3>
+            <div class="skill-card" style="border-color: var(--accent-color); background-color: rgba(231, 76, 60, 0.03);">
+                <h3 class="skill-title" style="border-bottom: none;"><span class="hero-tag">📋 牽機磁蕩（吸人後連招綜合處理流程）</span></h3>
+                <div class="skill-desc" style="font-weight: 500;">
+                    1. 被吸過去後，先在當前位置放置機甲。<br>
+                    2. 打掉場上的「雷晷」，去邊緣的炸彈平台打掉炸彈（注意必須打斷引爆讀條）。<br>
+                    3. 隨後互動雷晷殘骸可獲取紅色debuff。<br>
+                    4. 炸彈打掉後，在炸彈平台上對機甲使用「轉移」，將機甲換到平台上。<br>
+                    5. 平台會帶著機甲繞過中間的雷障前往另一半場，機甲會同時繼承你身上的紅色debuff。<br>
+                    6. 之後王會在初始半場放「蓄能橫掃」（致死），對面半場放「落星·炙炎」。<br>
+                    7. 等平台載著機甲繞到對面半場後，再次按「轉移」互換，你就會來到安全的另一半場，並重新拿回紅色debuff免疫「落星·炙炎」的傷害，完美規避！
+                </div>
+            </div>
+
+            <div class="skill-card" style="background-color: rgba(231, 76, 60, 0.05); border-color: #dc3545;">
+                <h3 class="skill-title" style="color: #c0392b;">📌 P3（最終狂暴階段）</h3>
+                <div class="skill-desc">
                     <ul>
                         <li><strong>天墜：</strong>BOSS釋放天墜後掉入最底層，重置全團CD，並進入最終狂暴階段(P3)。</li>
                         <li><strong>毀滅：</strong>蓄力30秒，每2秒全團穿刺AOE，在蓄力的第10/20/25秒BOSS會分別獲得5/20/50層debuff損毀(每層10%易傷)，蓄力結束團滅。</li>
@@ -1188,25 +1465,25 @@
                      💡：坦奶相連坦直接死，DPS留爆發職業。
                     </div>
                 </div>
-                <div class="media-column">
+                <div class="skill-media-container">
                      <figure class="img-group">
                         <video src="69.mp4" class="gallery-item" preload="metadata" loop muted playsinline></video>
                         <figcaption class="img-caption">天機雷印·終-自覺</figcaption>
                     </figure>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <div class="section-block boss-section" id="references">
+    <div class="section-block boss-section collapsed" id="references">
         <div class="section-header" style="background-color: var(--primary-bg);" onclick="toggleSection(this)">
             <span>📚 資料來源與出處</span>
             <span class="toggle-icon">▼</span>
         </div>
         <div class="section-content">
-            <div class="content-grid" style="display: block; padding: 30px;">
+            <div class="reference-card">
                 <p style="font-weight: bold; font-size: 16px; margin-top: 0;">特別感謝以下作者的攻略與影片：</p>
-                
                 <ul class="reference-list">
                     <li>圖片/影片素材來源：<br>
                         <a href="https://www.bilibili.com/video/BV1zPo1BiE2S/?spm_id_from=333.788.videopod.episodes&vd_source=420428a85ea82b7cd9c693fdb661b93e" target="_blank">【Bilibili】【小怪兽】25人英雄阆风悬城副本1-5boss技能机制保姆迅猛式讲解</a><br>
@@ -1219,7 +1496,6 @@
                     </li>
                     <li>音樂素材來源：【Bilibili】</li>
                 </ul>
-
                 <div class="disclaimer">
                     ※ 聲明：本網頁攻略僅作為《劍網三》玩家內部交流與拓荒學習使用，非商業用途。部分圖片與素材版權歸原作者或原公司所有，如有侵權請隨時聯繫移除。
                 </div>
@@ -1249,37 +1525,75 @@
         }
     });
 
-    // === 2. 區塊摺疊功能 (Collapsible Sections) ===
+    // === 2. 手風琴區塊摺疊功能 (Accordion Mode) ===
     function toggleSection(headerElement) {
-        const block = headerElement.parentElement;
-        block.classList.toggle('collapsed');
+        const currentBlock = headerElement.parentElement;
+        const isCurrentlyCollapsed = currentBlock.classList.contains('collapsed');
+
+        // 先把所有的王都收起來
+        const allBlocks = document.querySelectorAll('.boss-section');
+        allBlocks.forEach(block => {
+            block.classList.add('collapsed');
+        });
+
+        // 如果原本是收起的，就把它展開並平滑對齊畫面
+        if (isCurrentlyCollapsed) {
+            currentBlock.classList.remove('collapsed');
+            
+            // 延遲一點點讓網頁長度展開後，再進行平滑滾動對齊
+            setTimeout(() => {
+                const topOffset = currentBlock.getBoundingClientRect().top + window.scrollY - 20; 
+                window.scrollTo({ top: topOffset, behavior: 'smooth' });
+            }, 50);
+        }
     }
 
-    // === 3. 滾動進度追蹤 (Scroll Spy) ===
-    const sections = document.querySelectorAll('.boss-section');
-    const navLinks = document.querySelectorAll('.nav-link');
+    // === 3. 左側側邊欄點擊導航與自動展開機制 ===
+    const sidebarNavLinks = document.querySelectorAll('.sidebar .nav-link');
+    sidebarNavLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('data-target');
+            if (targetId && (targetId.startsWith('boss') || targetId === 'references')) {
+                e.preventDefault(); // 阻擋預設瞬間跳轉，改用我們的平滑手風琴特效
+                
+                const targetBlock = document.getElementById(targetId);
+                if (targetBlock) {
+                    // 把所有人收起來
+                    document.querySelectorAll('.boss-section').forEach(b => b.classList.add('collapsed'));
+                    // 展開點擊的那一隻王
+                    targetBlock.classList.remove('collapsed');
+                    
+                    // 平滑滾動過去
+                    setTimeout(() => {
+                        const topOffset = targetBlock.getBoundingClientRect().top + window.scrollY - 20; 
+                        window.scrollTo({ top: topOffset, behavior: 'smooth' });
+                    }, 50);
+                }
+            }
+        });
+    });
 
+    // 滾動進度追蹤 (Scroll Spy - 更新左側亮起狀態)
     const observerOptions = {
         root: null,
         rootMargin: '-20% 0px -60% 0px', 
         threshold: 0
     };
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                navLinks.forEach(link => link.classList.remove('active'));
+                sidebarNavLinks.forEach(link => link.classList.remove('active'));
                 const activeLink = document.querySelector(`.nav-link[data-target="${entry.target.id}"]`);
                 if (activeLink) activeLink.classList.add('active');
             }
         });
     }, observerOptions);
+    document.querySelectorAll('.boss-section').forEach(sec => observer.observe(sec));
 
-    sections.forEach(sec => observer.observe(sec));
 
     // === 4. 🛑 一鍵暫停/播放所有影片動畫 (預設為暫停) ===
     const gifToggleBtn = document.getElementById('gifToggleBtn');
-    let isGifPaused = true; // 預設狀態為暫停，節省效能
+    let isGifPaused = true; 
 
     gifToggleBtn.addEventListener('click', function() {
         isGifPaused = !isGifPaused;
