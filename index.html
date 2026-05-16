@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《劍網三》閬風懸城全機制實戰攻略 (V2.0)</title>
+    <style>
+        /* === 定義色彩變數（深淺色完美分離版） === */
+        :root {
+            --primary-bg: #2c3e50;       
+            --heading-color: #2c3e50;    
+            --accent-color: #e74c3c;
+            --bg-color: #e9ecef;
+            --block-bg: #ffffff;
+            --text-main: #333333;
+            --text-light: #666666;
+            --link-color: #2980b9;       
+            --border-color: #dee2e6;
+            --tip-bg: #fff3cd;
+            --tip-border: #ffc107;
+            --tip-text: #856404;
+            --sidebar-width: 270px; 
+            --shadow-color: rgba(0,0,0,0.05);
+        }
+
+        /* 🌙 深色模式的變數替換 */
+        body.dark-mode {
+            --primary-bg: #1a252f;       
+            --heading-color: #ecf0f1;    
+            --accent-color: #e74c3c;
+            --bg-color: #121212;
+            --block-bg: #1e1e1e;
+            --text-main: #dfdfdf;
+            --text-light: #aaaaaa;
+            --link-color: #5dade2;       
+            --border-color: #333333;
+            --tip-bg: #2d2a1b;
+            --tip-border: #b89c3a;
+            --tip-text: #e8d08d;
+            --shadow-color: rgba(0,0,0,0.5);
+        }
+        
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 20px 20px calc(var(--sidebar-width) + 40px);
+            font-size: 16px; 
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* === 左側快速導覽列 === */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--primary-bg); 
+            color: white;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            overflow-y: auto;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s;
+        }
+        .sidebar h2 {
+            font-size: 20px; 
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #4a6278;
+            padding-bottom: 10px;
+            color: #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #themeToggleBtn {
+            background: none;
+            border: none;
+            color: #f1c40f;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #themeToggleBtn:hover { transform: scale(1.2); }
+
+        .sidebar a {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-weight: bold;
+            font-size: 15px; 
+        }
+        .sidebar a:hover {
+            background-color: rgba(231, 76, 60, 0.5);
+            color: white;
+            padding-left: 20px; 
+        }
+        .sidebar a.active {
+            background-color: var(--accent-color);
+            color: white;
+            padding-left: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 🛑 暫停動畫按鈕樣式 */
+        #gifToggleBtn {
+            background: none;
+            border: 1px solid #4a6278;
+            color: #f1c40f;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        #gifToggleBtn:hover {
+            background-color: #34495e;
+            color: white;
+        }
+
+        /* === 音樂播放器樣式 === */
+        .music-player-container {
+            margin-top: auto; 
+            padding-top: 20px;
+            border-top: 1px solid #4a6278;
+        }
+        .current-song-display {
+            background-color: rgba(0,0,0,0.3);
+            color: #deff9a;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 14px; 
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .custom-player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            color: #ecf0f1;
+            font-size: 18px; 
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .icon-btn:hover { color: #deff9a; transform: scale(1.1); }
+        .time-display {
+            font-size: 13px; 
+            color: #bdc3c7;
+            font-family: monospace;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .volume-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .volume-popup {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a252f;
+            padding: 10px 0;
+            border-radius: 6px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.4);
+            height: 90px;
+            width: 32px;
+            z-index: 10;
+            margin-bottom: 5px; 
+        }
+        .volume-popup::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+        }
+        .volume-container:hover .volume-popup { display: flex; align-items: center; justify-content: center; }
+        #volumeSlider { 
+            -webkit-appearance: slider-vertical; 
+            appearance: slider-vertical;
+            width: 100%; 
+            height: 100%;
+            cursor: pointer; 
+            outline: none;
+        }
+        .thick-progress {
+            width: 100%; height: 6px; border-radius: 4px; background: #4a6278; outline: none; cursor: pointer; -webkit-appearance: none; margin-top: 5px;
+        }
+        .thick-progress::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #deff9a; cursor: pointer; }
+        .thick-progress::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #deff9a; cursor: pointer; border: none; }
+
+        /* === 回到最上層按鈕 === */
+        #backToTopBtn {
+            display: none; position: fixed; bottom: 40px; right: 40px; z-index: 999;
+            background-color: var(--accent-color); color: white; border: none; outline: none;
+            cursor: pointer; padding: 15px; border-radius: 50%; font-size: 16px; font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s, background-color 0.2s;
+        }
+        #backToTopBtn:hover { background-color: #c0392b; transform: scale(1.1); }
+
+        /* === 右上角專屬浮動群組 (無邊框現代氣泡版) === */
+        .floating-mascot {
+            position: fixed;
+            top: 25px;   
+            right: 40px;
+            z-index: 998; 
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            pointer-events: auto;
+        }
+        .floating-mascot:hover {
+            transform: scale(1.1) rotate(-5deg); 
+        }
+        .floating-mascot img {
+            width: 80px; 
+            height: 80px;
+            object-fit: contain; 
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); 
+            border-radius: 50%; 
+            border: 3px solid white; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background-color: white; 
+        }
+        
+        /* 無邊框對話框本體 */
+        .mascot-speech {
+            position: relative; 
+            background-color: white; 
+            color: #333; 
+            padding: 10px 18px;
+            border-radius: 20px; 
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* 靠陰影展現立體感 */
+        }
+        
+        /* 氣泡無邊框純色小尾巴 */
+        .mascot-speech::after {
+            content: '';
+            position: absolute;
+            top: 50%; 
+            right: -10px; 
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 10px solid white; /* 顏色跟著對話框底色走，不再是黑色 */
+        }
+
+        /* 🌙 深色模式的專屬樣式 🌙 */
+        body.dark-mode .mascot-speech {
+            background-color: #1a1a1a; /* 深黑底 */
+            color: #eee; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        body.dark-mode .mascot-speech::after {
+            border-left-color: #1a1a1a; /* 尾巴跟著變深黑底 */
+        }
+        body.dark-mode .floating-mascot img {
+            border-color: var(--accent-color); 
+            background-color: var(--accent-color);
+        }
+
+        /* === 攻略主體容器 === */
+        .container { max-width: 1450px; margin: 0 auto; }
+        
+        .header-title {
+            text-align: center; font-size: 32px; font-weight: bold;
+            color: var(--heading-color); 
+            margin-bottom: 30px; padding: 25px;
+            background: var(--block-bg); border-radius: 8px; box-shadow: 0 2px 4px var(--shadow-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .section-block {
+            background: var(--block-bg); border-radius: 8px; margin-bottom: 40px;
+            box-shadow: 0 4px 6px var(--shadow-color); overflow: hidden;
+            scroll-margin-top: 20px; transition: background-color 0.3s;
+        }
+        
+        .section-header {
+            background-color: var(--primary-bg); 
+            color: white; padding: 15px 20px;
+            font-size: 20px; font-weight: bold; display: flex; justify-content: space-between;
+            align-items: center; cursor: pointer; transition: background-color 0.2s;
+        }
+        .section-header:hover { background-color: #34495e; }
+        .toggle-icon { font-size: 16px; transition: transform 0.3s; }
+        .collapsed .toggle-icon { transform: rotate(-90deg); }
+        .collapsed .section-content { display: none; } 
+
+        .content-grid {
+            display: flex; flex-wrap: wrap; padding: 25px 30px; gap: 30px;
+            border-bottom: 1px solid var(--border-color); transition: border-color 0.3s;
+        }
+        .content-grid:last-child { border-bottom: none; }
+        .text-column { flex: 1; min-width: 300px; }
+        .media-column { flex: 1.25; min-width: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-content: start; }
+        
+        h3 { 
+            color: var(--heading-color); 
+            font-size: 18px; margin-top: 0; margin-bottom: 15px; 
+            border-left: 4px solid var(--accent-color); padding-left: 10px; transition: color 0.3s; 
+        }
+        ul, ol { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 24px; }
+        .tip {
+            background-color: var(--tip-bg); border-left: 4px solid var(--tip-border);
+            padding: 10px 15px; margin: 12px 0 0 0; font-size: 15px; color: var(--tip-text);
+            border-radius: 0 4px 4px 0; transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            font-weight: 500;
+        }
+        .hero-tag { color: var(--accent-color); font-weight: bold; }
+
+        /* === 參考資料區塊 === */
+        .reference-list { list-style-type: disc; margin-bottom: 15px; }
+        .reference-list li { margin-bottom: 10px; }
+        .reference-list a { color: var(--link-color); text-decoration: none; font-weight: bold; transition: color 0.2s; }
+        .reference-list a:hover { color: var(--accent-color); text-decoration: underline; }
+        .disclaimer { font-size: 13px; color: var(--text-light); border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 20px; transition: color 0.3s, border-color 0.3s; }
+
+        /* === 🎬 圖片與影片區塊統一相框樣式 === */
+        .img-group { margin: 0; margin-bottom: 15px; width: 100%; text-align: center; }
+        .img-caption { font-size: 14px; color: var(--text-light); margin-top: 8px; font-weight: bold; line-height: 1.3; transition: color 0.3s; }
+        
+        .gallery-item {
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            object-fit: contain; 
+            background-color: #151e27; 
+            border-radius: 6px; 
+            display: block;
+            cursor: zoom-in;
+            border: 1px solid var(--border-color);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .gallery-item:hover { 
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+        }
+
+        /* === 🌟 透明模糊背景的燈箱畫廊 === */
+        #mediaModal {
+            display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(8px); 
+        }
+        .modal-media {
+            margin: auto; display: none; 
+            width: 75vw;  
+            max-width: 1200px; 
+            aspect-ratio: 16 / 9; 
+            object-fit: contain; 
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.8);
+            border-radius: 8px; user-select: none; outline: none;
+            background-color: #151e27; 
+        }
+        .gallery-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.1); color: white; border: none; font-size: 40px;
+            padding: 15px; cursor: pointer; transition: background 0.3s, transform 0.2s;
+            border-radius: 8px; z-index: 100000;
+        }
+        .gallery-btn:hover { background: rgba(231, 76, 60, 0.8); transform: translateY(-50%) scale(1.1); }
+        #prevImgBtn { left: 20px; }
+        #nextImgBtn { right: 20px; }
+        #closeModalBtn {
+            position: absolute; top: 20px; right: 30px; font-size: 40px; color: white;
+            cursor: pointer; transition: color 0.2s; z-index: 100000; font-weight: bold;
+        }
+        #closeModalBtn:hover { color: var(--accent-color); }
+
+        /* === 手機/平板的響應式設計 === */
+        @media screen and (max-width: 900px) {
+            body { padding: 20px; }
+            .sidebar { position: static; width: 100%; height: auto; margin-bottom: 20px; border-radius: 8px; padding: 15px; }
+            .sidebar h2 { display: block; }
+            #themeToggleBtn { float: right; margin-top: -5px; }
+            .sidebar a { display: inline-block; margin-right: 10px; margin-bottom: 10px; }
+            .music-player-container { padding-top: 15px; margin-top: 15px; }
+            #backToTopBtn { bottom: 20px; right: 20px; padding: 12px; }
+            .text-column, .media-column { flex: 100%; }
+            #prevImgBtn, #nextImgBtn { font-size: 24px; padding: 10px; }
+            
+            .floating-mascot { top: 10px; right: 10px; gap: 8px; }
+            .floating-mascot img { width: 55px; height: 55px; border-width: 2px; }
+            .mascot-speech { padding: 6px 12px; font-size: 12px; }
+            .mascot-speech::after { right: -8px; border-width: 6px 0 6px 8px; }
+
+            .modal-media { width: 95vw; aspect-ratio: 16 / 9; max-width: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <div class="nav-links">
+        <h2>🎯 快速導覽 
+            <button id="themeToggleBtn" title="切換深淺色模式">🌙</button>
+        </h2>
+        <a href="#boss1" class="nav-link" data-target="boss1">⚔️ 一王：笑妝娘</a>
+        <a href="#boss2" class="nav-link" data-target="boss2">⚔️ 二王：唐醉</a>
+        <a href="#boss3" class="nav-link" data-target="boss3">⚔️ 三王：柳公子</a>
+        <a href="#boss4" class="nav-link" data-target="boss4">⚔️ 四王：阿史那承慶</a>
+        <a href="#boss5" class="nav-link" data-target="boss5">⚔️ 五王：唐懷仁</a>
+        <br>
+        <a href="#references" class="nav-link" data-target="references" style="color: #f1c40f;">📚 資料來源與致謝</a>
+        <br>
+        <button id="gifToggleBtn" title="一鍵暫停或播放網頁上的所有影片動畫">🛑 暫停所有動畫</button>
+    </div>
+
+    <div class="music-player-container">
+        <div class="current-song-display" id="songTitle">準備播放中...</div>
+        <audio id="bgmPlayer" style="display:none;" autoplay>
+            您的瀏覽器不支援音樂播放。
+        </audio>
+        <div class="custom-player-controls">
+            <button class="icon-btn" id="prevBtn" title="上一首">⏮</button>
+            <button class="icon-btn" id="playPauseBtn" title="播放/暫停">▶️</button>
+            <button class="icon-btn" id="nextBtn" title="下一首">⏭</button>
+            <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
+            <div class="volume-container">
+                <button class="icon-btn" id="muteBtn" title="調整音量">🔊</button>
+                <div class="volume-popup">
+                    <input type="range" id="volumeSlider" orient="vertical" min="0" max="1" step="0.01" value="0.5">
+                </div>
+            </div>
+        </div>
+        <input type="range" id="progressBar" class="thick-progress" min="0" max="100" value="0" step="0.1">
+    </div>
+</nav>
+
+<button id="backToTopBtn" title="回到最上層">↑ Top</button>
+
+<div class="floating-mascot" title="遊戲私訊「青瓦白牆」～拓荒加油！！">
+    <span class="mascot-speech">優化錯誤和回報滑過來！</span>
+    <img src="f.png" alt="專屬圖案">
+</div>
+
+<div class="container">
+    <div class="header-title" id="top">
+        《劍網三》閬風懸城全機制實戰攻略<br>
+        <span style="font-size: 18px; color: var(--text-light); font-weight: normal;"> 考前衝刺講義(V3.0)</span>
+    </div>
+
+    <div class="section-block boss-section" id="boss1">
+        <div class="section-header" onclick="toggleSection(this)">
+            <span>⚔️ 一王：笑妝娘</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        
+        <div class="section-content">
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 基礎機制與場地</h3>
+                    <ul>
+                        <li>王選定位置後不會移動。</li>
+                        <li>場上9個立柱。王血量低於80% / 50% / 11%時，立柱分別下降2 / 3 / 4個並移動到固定位置，不再產生音波。</li>
+                        <li><span class="hero-tag">【英雄】</span>：對應血量階段時，王隨機移動，立柱周圍會出現2/3/4個陣盤，每秒全團AOE。
+                            <div class="tip">💡：陣盤需5人以上承傷，否則王鎖血。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <img src="1.jpg" class="gallery-item" alt="場地立柱分佈示意圖">
+                        <figcaption class="img-caption">場地立柱分佈示意圖</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="2.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">英雄陣盤承傷</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 BOSS技能</h3>
+                    <ul>
+                        <li><strong>靈簪鎖魂：</strong>隨機點1人引導扇形，扇形殘留5秒。
+                            <div class="tip">💡 ：被點出人群。</div>
+                        </li>
+                        <li><strong>祭跪雙墳：</strong>二次長矩形：首次原地釋放，第二次瞬移至固定位置。
+                            <div class="tip">💡 ：躲開，連吃兩次會死。</div>
+                        </li>
+                        <li><strong>悲音慟潮：</strong>王瞬移到隨機柱子旁放幻歌（蓄力8秒無敵），幻歌碰到其他柱子會再次觸發幻歌。
+                            <div class="tip">💡 ：二段跳（蓄力時無法扶搖）。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>墳音咒：</strong>隨機點1人6秒後排大圈，圈碰到柱子會共鳴產生幻歌。
+                            <div class="tip">💡 ：往沒有柱子的方向排圈，圈出聶雲走。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>慟哭震地：</strong>讓所有升起柱子放幻歌。
+                            <div class="tip">💡 ：在兩個幻歌交叉的位置二段跳。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <video src="3.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">靈簪鎖魂</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="4.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">祭跪雙墳</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="5.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">悲音慟潮</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="6.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">墳音咒</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="7.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">慟哭震地</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block boss-section" id="boss2">
+        <div class="section-header" onclick="toggleSection(this)">
+            <span>⚔️ 二王：唐醉</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        
+        <div class="section-content">
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 基礎機制與場地</h3>
+                    <ul>
+                        <li><strong>中心大風扇：</strong>風扇開啟時全場無法跳躍與扶搖。</li>
+                        <li><strong>中心風區：</strong>進入會被吹到13尺高空，技能欄替換成QTE1「乘風」技能，往當前面向衝刺。主動離開中心會重製輕功調息。</li>
+                        <li><strong>外側風區：</strong>外環的風會把人往外吹。
+                            <div class="tip">💡 ：坦克絕對不能在懸浮狀態吃普攻，會直接被秒殺。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                     <figure class="img-group">
+                        <video src="8.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">中心風區與QTE</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 BOSS技能（P1常規時間）</h3>
+                    <ul>
+                        <li><strong>三疊殺：</strong>對一仇造成三次越來越痛的穿刺外功傷害。
+                            <div class="tip">💡 ：坦克開減傷。</div>
+                        </li>
+                        <li><strong>魂鎖牽：</strong>點名4名遠程，與最近玩家兩兩連線7秒。若自然結束未拉斷，扣除99.99%真實傷害並附加永久易傷(1層20%)。
+                            <div class="tip">💡 ：連線兩人往反方向跑以拉斷連線（常規時需大於40尺，千機階段縮短為20尺）。</div>
+                        </li>
+                        <li><strong>透骨刺：</strong>隨機點名衝鋒，造成分攤傷害並附帶再中即死的致命標記。
+                            <div class="tip">💡 ：必須 1+4人（共5人）抱團承傷。</div>
+                        </li>
+                        <li><strong>碎星(血量低於70/<span class="hero-tag">80%</span>)：</strong>場上出7個圈（其中兩個有「能量灌注」發光特效），落地造成全團AOE與永久易傷。英雄P2階段僅出在首領半場。
+                            <div class="tip">💡 ：兩個坦去踩2個有能量灌注特效的圈，其他人去踩剩餘5個圈。</div>
+                        </li>
+                        <li><strong>毒變(血量低於70/<span class="hero-tag">80%</span>)：</strong>優先點2/<span class="hero-tag">3</span>遠程DPS獲得debuff翎刃毒，會傳染，驅散後場上會殘留毒圈。若場上受風力影響的毒圈≥4個則全場秒殺。（英雄P2階段不放）
+                            <div class="tip">💡 ：在場中抱團群驅，讓中心風力把毒圈吹散消失；若沒群驅，則在中心「分散」等驅，避免傳染給隊友。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <img src="9.jpg" class="gallery-item" alt="三疊殺">
+                        <figcaption class="img-caption">三疊殺</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="10.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">魂鎖牽</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="11.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">沒拉斷</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="12.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">透骨刺</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="13.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">碎星</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="14.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">能量灌注特效</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="15.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">毒變</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3><span class="hero-tag">📌 英雄新增（血量低於30%進P2）</span></h3>
+                    <ul>
+                        <li><strong>千機·蝕地瘴（低於30%）：</strong>全場高度1.5尺以下每秒高額傷害（非坦職業約2秒即死）。每五次小圈釋放一次大圈，兩輪後階段結束。
+                            <div class="tip">💡 ：全團進中心風區升空。</div>
+                        </li>
+                        <li><strong>千機·星火：</strong>點名6名玩家腳下排小圈（上下4尺內受傷）。
+                            <div class="tip">💡 ：用QTE躲圈，分配部分人提早扶搖跳進中心風區，或離開中心風圈在聶雲回去，製造高度差可以少躲些圈。</div>
+                        </li>
+                        <li><strong>千機·燎原：</strong>在風力中心放15尺致死大圈，無視高度。
+                            <div class="tip">💡 ：用QTE離開大圈，在落地前聶雲、小輕功回中間。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                     <figure class="img-group">
+                        <video src="16.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">星火</figcaption>
+                    </figure>
+                     <figure class="img-group">
+                        <video src="17.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">燎原</figcaption>
+                    </figure>
+                     <figure class="img-group">
+                        <video src="18.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">拉線</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block boss-section" id="boss3">
+        <div class="section-header" onclick="toggleSection(this)">
+            <span>⚔️ 三王：柳公子</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        
+        <div class="section-content">
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 基礎機制與場地</h3>
+                    <ul>
+                        <li><strong>扇風形態（普攻）：</strong>正面4尺121度扇形AOE，無法扶搖。 &lt;&lt;施展聚鋒切換！
+                            <div class="tip">💡 ：需至少2人承傷，人不夠會被擊退。</div>
+                        </li>
+                        <li><strong>扇刃形態（普攻）：</strong>正面2尺寬矩形AOE，無法扶搖，附帶流血與外功易傷。　&lt;&lt;施展旋扇切換！
+                            <div class="tip">💡 ：易傷約5-6層換仇。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>地下管道（BOSS血低於40%）：</strong>場地升起8根柱子，其中只會有「兩組」柱子的地下管道相連(每個副本CD都不一樣！)。人多的一側會下降(最低3尺)，另一側上升(最高23尺)。
+                            <div class="tip">💡 ：人數差達到5人高度變化的速度大幅提升。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <img src="19.jpg" class="gallery-item" alt="相連地下管道">
+                        <figcaption class="img-caption">相連地下管道</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 BOSS技能（貫全程）</h3>
+                    <ul>
+                        <li><strong>旋扇/裂風：</strong>點名1人注視5秒後放扇子追擊，撞到人或柱會引爆全團AOE並分裂射出扇骨，追擊5秒後扇子威力衰減。<br>
+                            【普/英】第一次扇子引爆後會額外生出一把旋扇追最近的人。
+                            <div class="tip">💡 ：被點名到場邊安排的點位，等扇子變白色後扶搖起跳。若5秒前被扇子追上則30尺致死AOE。</div>
+                        </li>
+                        <li><strong>聚鋒 / 散鋒：</strong>點名5秒引導劍氣，命中玩家後在其身後釋放30尺扇形AOE的二段傷害。
+                            <div class="tip">💡 ：被點名到安排的點位，其他人避開連線或其身後。</div>
+                        </li>
+                        <li><strong>掠影探囊：</strong>點名1人失財debuff並偷錢後放扇形AOE。隨後根據玩家身上金幣>2萬追加90°扇形AOE；金幣<2萬則朝反向放270°扇形AOE。
+                            <div class="tip">💡 ：身上金幣>2萬到安排的點位，<2萬則原地不動。（英雄建議一定要帶足2萬...）</div>
+                        </li>
+                        <li><strong>三疊扇：</strong>連續點名3人，交替釋放旋扇與聚鋒。
+                            <div class="tip">💡 ：被點名者依序上場邊安排的點。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <video src="20.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">旋扇追擊</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="21.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">裂風及第二把扇子</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="22.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">聚鋒</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="23.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">聚鋒(被擋線)</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="24.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">掠影探囊</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="123.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">三疊扇</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3><span class="hero-tag">📌 英雄P2（BOSS血量80%～40%新增）</span></h3>
+                    <ul>
+                        <li><strong>神秘裝置（繳械）：</strong>繳械一名玩家的武器放左下裝置，須根據被繳械的玩家心法去右上裝置放對應武器。
+                            <div class="tip">💡 ：點外攻-奶放、點內攻-T放、點奶-內放、點T-外放。</div>
+                            <div class="tip">💡 ：點T放外攻武器時要延遲6秒放之外、其餘都可以秒放秒傳。</div>
+                            <div class="tip">💡 ：被繳械者去撿地上的金光拿回武器。</div>
+                        </li>
+                        <li><strong>傳功：</strong>玩家將武器放右上裝置後，其他人交互武器架蓄力傳功。
+                            <div class="tip">💡 ：安排至少2人以上傳功。</div>
+                            <div class="tip">💡 ：傳功時也會被技能點名，且受到傷害會被中斷傳功。</div>
+                        </li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 30px;"><span class="hero-tag">📌 英雄P3（BOSS血量低於40%）</span></h3>
+                    <ul>
+                        <li><strong>沾衣哨：</strong>點名15秒，結束時原地爆發上下19尺的立體穿透AOE。
+                            <div class="tip">💡 ：被點名的人，站上相連柱子的其中一端，隊友站上另一端利用人數差把他升上去。因高度差使AOE不會炸到大團。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <video src="25.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">神秘裝置</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <img src="26.jpg" class="gallery-item" alt="放置武器">
+                        <figcaption class="img-caption">放置武器</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <img src="27.jpg" class="gallery-item" alt="傳功">
+                        <figcaption class="img-caption">傳功</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="28.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">沾衣哨被點名</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="282.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">沾衣哨救隊友</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block boss-section" id="boss4">
+        <div class="section-header" onclick="toggleSection(this)">
+            <span>⚔️ 四王：阿史那承慶</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        
+        <div class="section-content">
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 基礎機制與場地</h3>
+                    <ul>
+                        <li><strong>戰鬥場地：</strong>九宮格，開怪時只有中間一格安全區。</li>
+                        <li><strong>開山（P1普攻）：</strong>單體傷害，附帶「搏命」層數。
+                            <div class="tip">💡 ：搏命層數在P2每2/4層會轉化爲1層「擋」技能，將以QTE形式出現。</div>
+                        </li>
+                        <li><strong>撼岳（P2普攻）：</strong>正面180度扇形AOE，附帶易傷/減療層數。
+                            <div class="tip">💡 ：P2由於頻繁釋放技能，除非奶不上，否則等到黃泉斬時在換坦即可。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <img src="29.jpg" class="gallery-item" alt="九宮格">
+                        <figcaption class="img-caption">九宮格</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 BOSS技能（P1）</h3>
+                    <ul>
+                        <li><strong>魂火爆發·塵：</strong>王在九宮格特定格子造成致死AOE。</li>
+                        <li><strong>魂火喚醒：</strong>激活除了中間以外的8個格子（紫色顯示）。
+                            <div class="tip">💡 ：若沒攜帶debuff喚醒的人進入紫色格子則釋放魂火爆發·塵。</div>
+                        </li>
+                        <li><strong>喚醒：</strong>點名2人（1近1遠）獲得debuff喚醒，踩紫色格子可以熄滅魂火；同時讓這2人周圍12尺的隊友獲得5層「喚」增傷Buff（1層約增傷2%）。
+                            <div class="tip">💡 ：中喚醒點名的人按分配消紫色格子。點名前抱團蹭增傷Buff。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>死侍：</strong>熄滅魂火處出現死侍小怪，若存活≥4個則全團致死。
+                            <div class="tip">💡 ：死侍出現時自帶100%減傷Buff，必須先驅散！且死侍會讀條蓄減傷必須打斷。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>死亡獻祭（紫圈）與鬼火球：</strong>死侍死後原地出紫圈，並飄出一顆鬼火球往BOSS移動。
+                            <div class="tip">💡 ：玩家踩進紫圈會變身死侍（獲得治療吸收盾及1【破】技能），奶媽需奶爆這個盾；同時必須要有玩家去觸碰擋下鬼火球（觸碰後10尺綠圈內玩家獲得1層「喚」），讓王碰到鬼火球會回血。</div>
+                        </li>
+                        <li><strong>破：</strong>王無敵蓄力，魂火會先對「兩列（共六個格子）」示警後隱匿，隨後爆發傷害。
+                            <div class="tip">💡 ：找沒有被魂火覆蓋的「安全區格子」躲避。</div>
+                        </li>
+                        <li><strong>歸塵：</strong>點2/3/4名遠程7秒debuff塵，腳底出現箭頭，延遲後對箭頭方向發射扇形AOE。
+                            <div class="tip">💡 ：大團在安全區格子中間抱，被點名的人箭頭朝外站到格子的邊緣排。<br>
+                            *被點的人頭頂buff消失後左右動一下或往中間動可以不吃傷害。</div>
+                        </li>
+                        <li><strong>處決 / 忘川：</strong>擊飛當前一仇到空中10尺並定身，隨後釋放至少需1+1人分擔傷害的圈（上下高度4尺），否則即死。
+                            <div class="tip">💡 ：安排1副T扶搖承傷。</div>
+                        </li>
+                        <li><strong>斬：</strong>王讀條5次，特效爲腳下(黃光）或頭頂(紅光），隨後按特效順序對地/空中玩家放AOE。
+                            <div class="tip">💡 ：記好顏色順序，黃跳紅不跳。<br>
+                            *如連續2次黃光可二段跳。<br>
+                            *如最後3-4次都是黃光可直接扶搖跳。</div>
+                        </li>
+                        <li><strong>劫（低於50%、25%）：</strong>場邊出鬼狼頭走直線，碰到亮著魂火格子（紫色）會觸發整行整列十字秒殺。<br>
+                            <span class="hero-tag">【英雄】</span>：英雄25%出鬼狼頭時，會同時翻轉四個角落的魂火，鬼狼頭階段結束再次翻轉十字的格子。
+                            <div class="tip">💡 ：提前拉到安全格子，遠程站安全點。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <video src="30.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">魂火喚醒</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="31.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">死侍</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="32.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">紫圈&鬼火球</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="33.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">破</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="34.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">歸塵</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="35.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">處決 / 忘川</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="36.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">斬</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="37.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">紅紅黃紅黃</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="38.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">鬼頭狼</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 BOSS技能（P2：2:03/<span class="hero-tag">2:30</span> 下階）</h3>
+                    <ul>
+                        <li><strong>巨刃掠影：</strong>轉階段釋放，全團AOE並附帶5秒dot。
+                            <div class="tip">💡 ：很癢隨便刷。</div>
+                        </li>
+                        <li><strong>黃泉斬：</strong>朝正前、左後、右後依次釋放扇形AOE。後續3次普攻變為「黃泉」，附帶矩形AOE，疊3層即死。
+                            <div class="tip">💡 *大團*：站BOSS右後，第二下扇形（左後）劈完往左一步即可。<br>
+                            💡 *坦克*：黃泉斬第一下釋放時往左或右躲，躲完回原位引導黃泉普攻，在當前T吃兩下後副T進面向接仇。</div>
+                        </li>
+                        <li><strong>風暴連擊：</strong>朝前方放3次延遲2/2/4秒順序隨機的黃圈，無人抵擋則全團穿刺AOE並易傷。
+                            <div class="tip">💡 ：坦進黃圈，在圈結算過半時按QTE「擋」（沒有要按QTE的坦站黃圈內也不影響）。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>汲取：</strong>王蓄力獲得200層無敵盾和AOE，18秒未消完層數全團秒殺。
+                            <div class="tip">💡 ：轉掉死侍後D坦踩紫圈變死侍，貼王使用1【破】消王的盾。<br>
+                            💡 *治療*：開減傷或給葵，否則AOE必死，奶爆有吸收盾的人。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>斬破：</strong>釋放一次「斬」與「破」，連續三波。
+                            <div class="tip">💡 ：同時處理聚氣（跳或不跳）與找安全區格子。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <img src="39.jpg" class="gallery-item" alt="巨刃掠影">
+                        <figcaption class="img-caption">巨刃掠影</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="40.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">黃泉斬</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="41.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">黃泉破</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="42.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">風暴連擊</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="43.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">汲取</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="44.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">斬破</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block boss-section" id="boss5">
+        <div class="section-header" onclick="toggleSection(this)">
+            <span>⚔️ 五王：唐懷仁</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        
+        <div class="section-content">
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 核心機制</h3>
+                    <ul>
+                        <li><strong>替厄銅犴（機甲）：</strong>開場領技能，可放置機甲在腳下，與使用「轉移」與機甲互換位置。若中必死Debuff，也可轉移傳給機甲。</li>
+                    </ul>
+
+                    <h3 style="margin-top: 30px;">📌 BOSS技能（P1：唐懷仁100-50%）</h3>
+                    <ul>
+                        <li><strong>充能：</strong>每秒充能0.5%，滿了全團秒殺。</li>
+                        <li><strong>磁震：</strong>穿刺AOE與持續掉血，期間獲得debuff磁震：轉移CD變爲8秒。
+                            <div class="tip">💡 ：減傷有效。</div>
+                        </li>
+                        <li><strong>索命箭：</strong>點3/<span class="hero-tag">5</span>名遠程，5秒後後腳下25尺大圈AOE。
+                            <div class="tip">💡 ：遠程點到去安排的位置，等結算出特效後，使用「轉移」跟提前放置在大團的機甲換位規避。</div>
+                        </li>
+                        <li><strong>陷陣機卒：</strong>普攻附帶易傷，死後自爆全團AOE。
+                            <div class="tip">💡 ：副坦拉著群即可，易傷太高就換仇。</div>
+                        </li>
+                        <li><strong>蘊雷機瓮：</strong>同時出兩隻，不斷讀條充能，只可打斷一次。
+                            <div class="tip">💡 ：轉火時不要提早打斷，讓安排的人壓秒斷。</div>
+                            <div class="tip">💡 ：輸出夠快能將王壓下50%血可以無視。</div>
+                        </li>
+                        <li><strong>充能餘波：</strong>場中擴散幻歌（觸碰即死），無法扶搖。<br>
+                            <span class="hero-tag">【英雄】</span>：幻歌到場邊後會原路收縮回場中。
+                            <div class="tip">💡 ：利用跟機甲「轉移」換位來規避。</div>
+                        </li>
+                        <li><strong>千機匣·毒剎：</strong>先後放兩個機關，結算時對5-45尺環形區域造成致死傷害。
+                            <div class="tip">💡 放二走一 ：到第二個機關放機甲後走到機關一等結算，隨後轉移到機關二的位置。</div>
+                        </li>
+                        <li><strong>千機匣·連弩：</strong>正面6尺寬矩形引導AOE。
+                            <div class="tip">💡 ：不會擊退的木龍牙。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <img src="45.jpg" class="gallery-item" alt="替厄銅犴領取">
+                        <figcaption class="img-caption">替厄銅犴領取</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <img src="46.jpg" class="gallery-item" alt="部署">
+                        <figcaption class="img-caption">部署</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <img src="47.jpg" class="gallery-item" alt="移轉">
+                        <figcaption class="img-caption">轉移</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="48.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">索命箭</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="49.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">蘊雷機瓮</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="50.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">充能餘波</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="51.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">毒剎</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="52.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">連弩</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="5051.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption"><span class="hero-tag">英雄毒剎+充能餘波演示</span></figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3>📌 BOSS技能（P2：須羅巨傀）</h3>
+                    <ul>
+                        <li><strong>斬擊：</strong>正面30°扇形AOE 。<br>
+                            <span class="hero-tag">【英雄】</span>：隨機方向釋放斬擊，3秒後接半徑30尺330度超大迴旋斬。
+                            <div class="tip">💡 ：看蜘蛛頭朝哪邊，斬擊時就往同一側躲扇形，等斬擊結束走回第一刀的30°扇形即可。</div>
+                        </li>
+                        <li><strong>玄陰霹靂彈：</strong>點名一仇，點名及結算時高額傷害。
+                            <div class="tip">💡 ：點名開減傷出人群15尺。</div>
+                        </li>
+                        <li><strong>落星·炙炎：</strong>朝隨機方向放50尺180度致死AOE，並殘留10秒火焰地板。
+                            <div class="tip">💡 ：躲開。</div>
+                        </li>
+                        <li><strong>連弩掃射：</strong>正面10尺寬矩形致死AOE，引導時旋轉一整圈（轉圈方向隨機）。
+                            <div class="tip">💡 ：大團提前在王正面放機甲後，走到王背後。等技能開始時使用「轉移」和機甲換位，再跟著連弩掃射轉圈的方向走幾步即可。</div>
+                        </li>
+                        <li><strong>飛鏢機關·切割：</strong>在隨機兩邊出現一行飛鏢橫穿全場。
+                            <div class="tip">💡 ：直接使用扶搖直上跳躍規避。</div>
+                            <div class="tip">💡 ：ESC自定義介面-提醒類提示<<會提示飛鏢方向</div>
+                        </li>
+                        <li><strong>落星·磁震：</strong>落下12個磁圈並殘留，踩到獲得debuff磁震。
+                            <div class="tip">💡 ：躲開。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>瞬殺箭：</strong>點10人獲得debuff機煞·瞬殺箭5秒，效果結束死亡。
+                            <div class="tip">💡 ：原地放機甲，點名一出就轉移。</div>
+                        </li>
+                        <li><span class="hero-tag">【英雄】</span><strong>天機雷印：</strong>點10人連線獲得debuff33309機煞·雷印10秒，效果結束死亡。
+                            <div class="tip">💡：點名一出就轉移。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <video src="53.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">斬擊</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="54.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">玄陰霹靂彈</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="55.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">落星·炙炎</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="56.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">連弩掃射</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <img src="57.jpg" class="gallery-item" alt="飛鏢提示">
+                        <figcaption class="img-caption">飛鏢提示</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="58.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">飛鏢(扶搖)</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="59.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">飛鏢(轉移)</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="60.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">落星·磁震</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="61.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">瞬殺箭</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="62.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">天機雷印</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="text-column">
+                    <h3><span class="hero-tag">📌 牽機磁蕩（P3前英雄機制詳解）</span></h3>
+                    <ul>
+                        <li><strong>牽機磁蕩（基礎機制）：</strong>王無敵，把全團吸到戰場一側，中間出雷障（玩家碰即死，機甲不會）分割場地。隨後在玩家側的場地落下雷晷·炙陽。</li>
+                        <li><strong>赤陽·震鳴：</strong>雷晷·炙陽間隔1秒，不斷蓄力3秒釋放AOE。雷晷被擊破後生成殘骸，互動可獲得debuff 機煞·赤陽殘響。</li>
+                        <li><strong>炸彈平台：</strong>牽機磁盪期間出現，並環繞場地一周，該平台可供玩家立足。同時平台上搭載了炸彈，並不斷釋放「引爆」。</li>
+                        <li><strong>引爆：</strong>蓄力10秒，全場致死AOE。
+                            <div class="tip">💡 ：需打斷。</div>
+                        </li>
+                        <li><strong>蓄能橫掃：</strong>蓄力5秒，橫掃初始吸附的場地一側，對其中玩家造成致死傷害。</li>
+                        <li><strong>星火連珠：</strong>BOSS跳回牆上蓄力20秒，隨機順序裝填紅/藍珠子後發射，期間落下雷晷·炙陽（紅）和雷晷·玄陰（藍）。
+                            <div class="tip">💡 ：雷晷死後互動殘骸可以拿到對應顏色的debuff機煞·赤陽殘響(紅)和機煞·玄陰殘響(藍)，可以吸收對應顏色珠子的傷害。（期間轉移CD僅0.5秒，debuff消失前需換位把殘響傳給機甲，否則即死）</div>
+                        </li>
+                        <li><strong>天機雷印·厄：</strong>人與機甲連線10秒，效果結束玩家死亡，任意一方死亡/損毀移除效果。當機甲掉落至場地下方會直接損毀，同時玩家獲得QTE技能「易命」。
+                            <div class="tip">💡 ：跳出界外時，在界外按轉移讓機甲掉落在場外損毀獲得QTE，P3用。</div>
+                        </li>
+                    </ul>
+
+                    <h3 style="margin-top: 30px;"><span class="hero-tag">📌 牽機磁蕩（吸人後連招處理流程）</span></h3>
+                    <div class="tip" style="background-color: transparent; border-color: var(--accent-color); color: var(--text-main); font-weight: 600; line-height: 1.8;">
+                        <span style="color: var(--accent-color); font-weight: bold;">💡 處理流程：</span><br>
+                        1. 被吸過去後，先在當前位置放置機甲。<br>
+                        2. 打掉場上的「雷晷」，去邊緣的炸彈平台打掉炸彈（注意必須打斷引爆讀條）。<br>
+                        3. 隨後互動雷晷殘骸可獲取紅色debuff。<br>
+                        4. 炸彈打掉後，在炸彈平台上對機甲使用「轉移」，將機甲換到平台上。<br>
+                        5. 平台會帶著機甲繞過中間的雷障前往另一半場，機甲會同時繼承你身上的紅色debuff。<br>
+                        6. 之後王會在初始半場放「蓄能橫掃」（致死），對面半場放「落星·炙炎」。<br>
+                        7. 等平台載著機甲繞到對面半場後，再次按「轉移」互換，你就會來到安全的另一半場，並重新拿回紅色debuff免疫「落星·炙炎」的傷害，完美規避！
+                    </div>
+                </div>
+                <div class="media-column">
+                    <figure class="img-group">
+                        <video src="63.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">牽機磁蕩</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="64.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">炸彈平台</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="65.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">蓄能橫掃</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="66.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">紅藍雷晷</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="67.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">星火連珠</figcaption>
+                    </figure>
+                    <figure class="img-group">
+                        <video src="68.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">天機雷印·厄</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="content-grid" style="border-bottom: none; background-color: rgba(231, 76, 60, 0.05);">
+                <div class="text-column">
+                    <h3>📌 P3（最終狂暴階段）</h3>
+                    <ul>
+                        <li><strong>天墜：</strong>BOSS釋放天墜後掉入最底層，重置全團CD，並進入最終狂暴階段(P3)。</li>
+                        <li><strong>毀滅：</strong>蓄力30秒，每2秒全團穿刺AOE，在蓄力的第10/20/25秒BOSS會分別獲得5/20/50層debuff損毀(每層10%易傷)，蓄力結束團滅。</li>
+                        <li><span class="hero-tag">【英雄】</span><strong>天機雷印·终：</strong>點12人兩兩相連獲得debuff33309機煞·雷印10秒，效果結束死亡。會點名兩輪，不會點有buff死戰不息的人。</li>
+                    </ul>
+                    <div class="tip" style="background-color: transparent; border-color: #dc3545; color: var(--accent-color); margin-top: 15px; font-size: 15px; font-weight: bold;">
+                        💡 自覺：相連的一方可用在P2獲得的QTE「易命」自殺，並使另一方獲得buff死戰不息增傷120%、增療300%。
+                    </div>
+                    <div class="tip" style="background-color: transparent; border-color: #dc3545; color: var(--accent-color); margin-top: 15px; font-size: 15px; font-weight: bold;">
+                     💡：坦奶相連坦直接死，DPS留爆發職業。
+                    </div>
+                </div>
+                <div class="media-column">
+                     <figure class="img-group">
+                        <video src="69.mp4" class="gallery-item" autoplay loop muted playsinline></video>
+                        <figcaption class="img-caption">天機雷印·終-自覺</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block boss-section" id="references">
+        <div class="section-header" style="background-color: var(--primary-bg);" onclick="toggleSection(this)">
+            <span>📚 資料來源與出處</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            <div class="content-grid" style="display: block; padding: 30px;">
+                <p style="font-weight: bold; font-size: 16px; margin-top: 0;">特別感謝以下作者的攻略與影片：</p>
+                
+                <ul class="reference-list">
+                    <li>圖片/影片素材來源：<br>
+                        <a href="https://www.bilibili.com/video/BV1zPo1BiE2S/?spm_id_from=333.788.videopod.episodes&vd_source=420428a85ea82b7cd9c693fdb661b93e" target="_blank">【Bilibili】【小怪兽】25人英雄阆风悬城副本1-5boss技能机制保姆迅猛式讲解</a><br>
+                        <a href="https://www.bilibili.com/video/BV1F65T6FEoN/?share_source=copy_web&vd_source=9d127a9d6ac85e26a4b8c8f370b9e18c" target="_blank">【Bilibili】剑网三YX阆风悬城策T视角</a><br>
+                        <a href="https://www.jx3box.com/fb/106539" target="_blank">《劍三魔盒》【轶缡】全难度阆风悬城技能轴及机制处理简写附动图</a>
+                    </li>
+                    <li>機制數據參考：<br>
+                        <a href="https://www.jx3box.com/fb/106864#directory-1" target="_blank">《劍三魔盒》阆风悬城-yunmoer</a><br>
+                        <a href="https://www.jx3box.com/fb/106539" target="_blank">《劍三魔盒》【轶缡】全难度阆风悬城技能轴及机制处理简写附动图</a>
+                    </li>
+                    <li>音樂素材來源：劍網三遊戲原聲帶 OST</li>
+                </ul>
+
+                <div class="disclaimer">
+                    ※ 聲明：本網頁攻略僅作為《劍網三》玩家內部交流與拓荒學習使用，非商業用途。部分圖片與素材版權歸原作者或原公司所有，如有侵權請隨時聯繫移除。
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="mediaModal">
+    <div id="closeModalBtn" title="關閉">×</div>
+    <button class="gallery-btn" id="prevImgBtn" title="上一張">❮</button>
+    <img id="modalImg" class="modal-media" src="" alt="放大預覽">
+    <video id="modalVideo" class="modal-media" src="" controls autoplay loop playsinline></video>
+    <button class="gallery-btn" id="nextImgBtn" title="下一張">❯</button>
+</div>
+
+<script>
+    // === 1. 深淺色模式切換 (Dark Mode) ===
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    themeToggleBtn.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        if (document.body.classList.contains('dark-mode')) {
+            themeToggleBtn.textContent = '🌞'; 
+        } else {
+            themeToggleBtn.textContent = '🌙'; 
+        }
+    });
+
+    // === 2. 區塊摺疊功能 (Collapsible Sections) ===
+    function toggleSection(headerElement) {
+        const block = headerElement.parentElement;
+        block.classList.toggle('collapsed');
+    }
+
+    // === 3. 滾動進度追蹤 (Scroll Spy) ===
+    const sections = document.querySelectorAll('.boss-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px', 
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                const activeLink = document.querySelector(`.nav-link[data-target="${entry.target.id}"]`);
+                if (activeLink) activeLink.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // === 4. 🛑 一鍵暫停/播放所有影片動畫 ===
+    const gifToggleBtn = document.getElementById('gifToggleBtn');
+    let isGifPaused = false;
+
+    gifToggleBtn.addEventListener('click', function() {
+        isGifPaused = !isGifPaused;
+        const allVideos = document.querySelectorAll('video.gallery-item'); 
+        
+        if (isGifPaused) {
+            gifToggleBtn.innerHTML = '▶️ 播放所有動畫';
+            gifToggleBtn.style.color = '#e74c3c';
+            allVideos.forEach(v => v.pause());
+        } else {
+            gifToggleBtn.innerHTML = '🛑 暫停所有動畫';
+            gifToggleBtn.style.color = '#f1c40f';
+            allVideos.forEach(v => v.play());
+        }
+    });
+
+    // === 5. 🌟 終極混合畫廊模式 (同時支援圖片與自動播放影片) ===
+    const mediaModal = document.getElementById('mediaModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalVideo = document.getElementById('modalVideo');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const prevImgBtn = document.getElementById('prevImgBtn');
+    const nextImgBtn = document.getElementById('nextImgBtn');
+    
+    const allMediaArray = Array.from(document.querySelectorAll('.gallery-item'));
+    let currentMediaIndex = 0;
+
+    if(allMediaArray.length > 0) {
+        allMediaArray.forEach((media, index) => {
+            media.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                currentMediaIndex = index;
+                showMedia(currentMediaIndex);
+                mediaModal.style.display = "block";
+            });
+        });
+
+        function showMedia(index) {
+            const target = allMediaArray[index];
+            
+            if (target.tagName.toLowerCase() === 'img') {
+                modalVideo.style.display = 'none';
+                modalVideo.pause();
+                modalImg.src = target.src;
+                modalImg.style.display = 'block';
+            } else if (target.tagName.toLowerCase() === 'video') {
+                modalImg.style.display = 'none';
+                modalVideo.src = target.currentSrc || target.src;
+                modalVideo.style.display = 'block';
+                modalVideo.play(); 
+            }
+        }
+
+        closeModalBtn.addEventListener('click', () => {
+            mediaModal.style.display = "none";
+            modalVideo.pause();
+        });
+        
+        mediaModal.addEventListener('click', function(e) {
+            if (e.target === mediaModal) {
+                mediaModal.style.display = "none";
+                modalVideo.pause();
+            }
+        });
+
+        prevImgBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            currentMediaIndex = (currentMediaIndex - 1 + allMediaArray.length) % allMediaArray.length;
+            showMedia(currentMediaIndex);
+        });
+
+        nextImgBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentMediaIndex = (currentMediaIndex + 1) % allMediaArray.length;
+            showMedia(currentMediaIndex);
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (mediaModal.style.display === "block") {
+                if (e.key === "ArrowLeft") prevImgBtn.click();
+                if (e.key === "ArrowRight") nextImgBtn.click();
+                if (e.key === "Escape") {
+                    mediaModal.style.display = "none";
+                    modalVideo.pause();
+                }
+            }
+        });
+    }
+
+    // === 音樂播放器邏輯 ===
+    const playlist = [
+        { src: "music1.mp3", title: "🎵 1. 三葉のテーマ" },
+        { src: "music2.mp3", title: "🎵 2. 動天" },
+        { src: "music3.mp3", title: "🎵 3. Naruto Main Theme" },
+        { src: "music4.mp3", title: "🎵 4. ツナ覚醒" },
+        { src: "music5.mp3", title: "🎵 5. FAIRY TAIL メインテーマ" }
+    ];
+    let currentSongIndex = 0;
+    let hasInteracted = false; 
+    let isDraggingProgress = false; 
+
+    const bgmPlayer = document.getElementById('bgmPlayer');
+    const songTitle = document.getElementById('songTitle');
+    const prevBtn = document.getElementById('prevBtn');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const progressBar = document.getElementById('progressBar');
+    const muteBtn = document.getElementById('muteBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+
+    function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return m + ":" + (s < 10 ? "0" : "") + s;
+    }
+
+    function loadSong(index) {
+        bgmPlayer.src = playlist[index].src;
+        songTitle.textContent = playlist[index].title;
+        progressBar.value = 0;
+        timeDisplay.textContent = "0:00 / 0:00";
+    }
+
+    function playSong() {
+        bgmPlayer.play().then(() => { playPauseBtn.textContent = "⏸"; })
+                 .catch(e => { playPauseBtn.textContent = "▶️"; });
+    }
+
+    playPauseBtn.addEventListener('click', function() {
+        if (bgmPlayer.paused) playSong();
+        else { bgmPlayer.pause(); playPauseBtn.textContent = "▶️"; }
+    });
+
+    prevBtn.addEventListener('click', function() {
+        currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+        loadSong(currentSongIndex); playSong();
+    });
+
+    nextBtn.addEventListener('click', function() {
+        currentSongIndex = (currentSongIndex + 1) % playlist.length;
+        loadSong(currentSongIndex); playSong();
+    });
+
+    bgmPlayer.addEventListener('ended', () => nextBtn.click());
+
+    bgmPlayer.addEventListener('timeupdate', function() {
+        if (!isDraggingProgress) {
+            const currentTime = bgmPlayer.currentTime;
+            const duration = bgmPlayer.duration;
+            if (duration) {
+                progressBar.value = (currentTime / duration) * 100;
+                timeDisplay.textContent = formatTime(currentTime) + " / " + formatTime(duration);
+            }
+        }
+    });
+
+    bgmPlayer.addEventListener('loadedmetadata', function() {
+        timeDisplay.textContent = "0:00 / " + formatTime(bgmPlayer.duration);
+    });
+
+    progressBar.addEventListener('mousedown', () => { isDraggingProgress = true; });
+    progressBar.addEventListener('mouseup', () => { isDraggingProgress = false; });
+    progressBar.addEventListener('input', function() {
+        if (bgmPlayer.duration) bgmPlayer.currentTime = (progressBar.value / 100) * bgmPlayer.duration;
+    });
+
+    volumeSlider.addEventListener('input', function() {
+        bgmPlayer.volume = volumeSlider.value;
+        if (bgmPlayer.volume === 0) muteBtn.textContent = "🔇";
+        else { muteBtn.textContent = "🔊"; bgmPlayer.muted = false; }
+    });
+
+    muteBtn.addEventListener('click', function() {
+        if (bgmPlayer.muted || bgmPlayer.volume === 0) {
+            bgmPlayer.muted = false; bgmPlayer.volume = 0.5; volumeSlider.value = 0.5; muteBtn.textContent = "🔊";
+        } else {
+            bgmPlayer.muted = true; volumeSlider.value = 0; muteBtn.textContent = "🔇";
+        }
+    });
+
+    document.addEventListener('click', function initAudio() {
+        if (!hasInteracted) {
+            playSong(); hasInteracted = true;
+            document.removeEventListener('click', initAudio);
+        }
+    });
+
+    bgmPlayer.volume = 0.5; 
+    loadSong(currentSongIndex);
+
+    // === 回到最上層按鈕 ===
+    const backToTopBtn = document.getElementById("backToTopBtn");
+    window.onscroll = function() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    };
+    backToTopBtn.addEventListener("click", function() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+</script>
+
+</body>
+</html>
