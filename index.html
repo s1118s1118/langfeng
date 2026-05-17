@@ -1580,6 +1580,7 @@
             let originalSrc = target.currentSrc || target.src || target.getAttribute('src');
             modalVideo.src = originalSrc.split('#')[0];
             modalVideo.style.display = 'block';
+            modalVideo.load();  /* 🍎 專治蘋果 Safari 的特效藥：強制重新載入畫面 */
             modalVideo.play(); 
         }
     }
