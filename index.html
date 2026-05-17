@@ -329,7 +329,15 @@
             .skill-media-container { padding: 10px; }
             .skill-media-container .img-group { max-width: 100%; width: 100%; }
             .reference-card { margin: 15px 0; padding: 15px; }
-            .modal-media { width: 95vw; aspect-ratio: 16 / 9; max-width: none; }
+            
+            /* 👉 手機版完美適應橫向全螢幕的關鍵設定！ */
+            .modal-media { 
+                width: 100vw !important; 
+                height: 100vh !important; 
+                aspect-ratio: auto !important; 
+                max-width: none; 
+                border-radius: 0;
+            }
             
             .img-group:has(video.gallery-item)::after {
                 width: 46px; height: 46px; border-width: 2px;
@@ -771,9 +779,9 @@
             </div>
 
             <div class="skill-card reveal">
-                <h3 class="skill-title"><span class="highlight-yellow"><span class="hero-tag">📌 【英雄P3】沾衣哨</span></span></h3>
+                <h3 class="skill-title"><span class="hero-tag">📌 【英雄P3】沾衣哨</span></h3>
                 <div class="skill-desc">
-                    <p><span class="highlight-yellow">點名15秒，結束時原地爆發上下19尺的立體穿透AOE。</span></p>
+                    <p>點名15秒，結束時原地爆發上下19尺的立體穿透AOE。</p>
                     <div class="tip">💡 ：被點名的人，站上相連柱子的其中一端，隊友站上另一端利用人數差把他升上去。因高度差使AOE不會炸到大團。</div>
                 </div>
                 <div class="skill-media-container">
