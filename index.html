@@ -208,16 +208,15 @@
         /* === 右上角無邊框 Q 版對話框 === */
         .floating-mascot { position: fixed; top: 25px; right: 40px; z-index: 998; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform 0.3s; pointer-events: auto; }
         .floating-mascot:hover { transform: scale(1.1) rotate(-5deg); }
-        .floating-mascot img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); background-color: white; position: relative; z-index: 2;}
+        .floating-mascot img { width: 68px; height: 68px; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); background-color: white; position: relative; z-index: 2;}
         
         .mascot-speech { 
             position: relative; background-color: white; color: #333; padding: 10px 18px; border-radius: 20px; font-size: 14px; font-weight: bold; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
             opacity: 0; transform: translateX(10px); pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease;
         }
         
-        /* 補回這段魔法：滑鼠移過去時對話框會顯示 */
-        .floating-mascot:hover .mascot-speech,
         .mascot-speech.show { opacity: 1; transform: translateX(0); }
+        .floating-mascot:hover .mascot-speech { opacity: 1; transform: translateX(0); }
         
         .mascot-speech::after { content: ''; position: absolute; top: 50%; right: -10px; transform: translateY(-50%); width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid white; }
         body.dark-mode .mascot-speech { background-color: #1a1a1a; color: #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
@@ -323,7 +322,7 @@
             #backToTopBtn { bottom: 20px; right: 20px; padding: 12px; }
             
             .floating-mascot { top: 10px; right: 10px; gap: 8px; }
-            .floating-mascot img { width: 55px; height: 55px; border-width: 2px; }
+            .floating-mascot img { width: 46px; height: 46px; border-width: 2px; }
             .mascot-speech { padding: 6px 12px; font-size: 12px; }
             .mascot-speech::after { right: -8px; border-width: 6px 0 6px 8px; }
 
@@ -331,8 +330,6 @@
             .skill-media-container { padding: 10px; }
             .skill-media-container .img-group { max-width: 100%; width: 100%; }
             .reference-card { margin: 15px 0; padding: 15px; }
-            
-            /* 👉 手機版完美適應橫向全螢幕的關鍵設定！ */
             .modal-media { 
                 width: 100vw !important; 
                 height: 100vh !important; 
@@ -592,7 +589,7 @@
             <div class="skill-card reveal">
                 <h3 class="skill-title"><span class="highlight-blue">⚔️ 碎星 <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">(血量低於70/<span class="highlight-yellow">80%</span>釋放)</span></span></h3>
                 <div class="skill-desc">
-                    <p><span class="highlight-blue">場上出7個圈（其中兩個有「能量灌注」發光特效），落地造成全團AOE與 <span class="badge badge-danger">🩸 永久易傷</span>。</span><span class="highlight-yellow">英雄P2階段僅出在首領半場。</span></p>
+                    <p><span class="highlight-blue">場上出3/<span class="highlight-blue">7</span>個圈<span class="highlight-blue">（其中兩個有「能量灌注」發光特效）</span>，落地造成全團AOE與 <span class="badge badge-danger">🩸 永久易傷</span>。<span class="highlight-yellow">英雄P2階段僅出在首領半場。</span></span></p>
                     <div class="tip">💡 ：兩個坦去踩2個有能量灌注特效的圈，其他人去踩剩餘5個圈。</div>
                 </div>
                 <div class="skill-media-container">
